@@ -1,0 +1,11 @@
+{
+  "name": "WorkshopJS",
+  "description": "Workshop JS at Gobelins - l'école de l'image.",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "createjs-preloadjs": "~0.6.1",
+    "createjs-soundjs": "~0.6.1"
+  }
+}
