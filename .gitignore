@@ -115,6 +115,7 @@ crashlytics-build.properties
 # Logs
 logs
 *.log
+dist/
 
 # Runtime data
 pids

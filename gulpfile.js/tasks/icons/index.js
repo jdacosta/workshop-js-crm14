@@ -9,6 +9,5 @@ gulp.task('icons', function () {
         .pipe(iconfont(config.options))
         .on('error', handleErrors)
         .on('codepoints', generateIconSass)
-        .pipe(gulp.dest(config.dest))
-        .pipe(browserSync.reload({ stream: true }));
+        .pipe(gulp.dest(config.dest));
 });

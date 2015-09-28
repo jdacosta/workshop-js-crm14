@@ -14,7 +14,7 @@ var handleErrors = require('../lib/handleErrors');
 var opts = assign({}, watchify.args, config.browserify);
 var bwatch = watchify(browserify(opts));
 
-gulp.task('browserify-desktop', bundle);
+gulp.task('browserify', bundle);
 bwatch.on('update', bundle);
 bwatch.on('log', gutil.log);
 
