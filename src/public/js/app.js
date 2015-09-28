@@ -8,7 +8,6 @@ class App {
   }
 
   init() {
-    console.log('initiated');
     this.dataVisuManager.init();
   }
 }

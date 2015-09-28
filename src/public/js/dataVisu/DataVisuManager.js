@@ -66,6 +66,9 @@ class DataVisuManager {
 
     // Add to the dom
     document.body.appendChild(this.renderer.domElement);
+
+    // Launch render
+    requestAnimationFrame(this.render);
   }
 
   /**
@@ -94,7 +97,7 @@ class DataVisuManager {
   initStats() {
     // Stats
     this.stats = new Stats();
-    this.stats.setMode( 1 ); // 0: fps, 1: ms, 2: mb
+    this.stats.setMode(0); // 0: fps, 1: ms, 2: mb
 
     // Align top-left
     this.stats.domElement.style.position = 'absolute';
