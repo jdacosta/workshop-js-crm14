@@ -1,7 +1,7 @@
 var config = require('./');
 
 module.exports = {
-    name: 'app-desktop.js',
+    name: 'app.js',
     dest: config.publicAssets + '/js/',
     browserify: {
         entries: [config.sourceAssets + '/js/app.js'],
