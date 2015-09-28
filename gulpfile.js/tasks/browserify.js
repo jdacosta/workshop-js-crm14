@@ -1,4 +1,3 @@
-var browserSync  = require('browser-sync');
 var browserify   = require('browserify');
 var gulp         = require('gulp');
 var sourcemaps   = require('gulp-sourcemaps');
@@ -8,7 +7,7 @@ var assign       = require('lodash.assign');
 var buffer       = require('vinyl-buffer');
 var source       = require('vinyl-source-stream');
 var watchify     = require('watchify');
-var config       = require('../config/browserify-desktop');
+var config       = require('../config/browserify');
 var maps         = require('../config/sourcemaps');
 var handleErrors = require('../lib/handleErrors');
 
@@ -27,6 +26,5 @@ function bundle () {
         .pipe(uglify())
         .on('error', handleErrors)
         .pipe(sourcemaps.write(maps.dest))
-        .pipe(gulp.dest(config.dest))
-        .pipe(browserSync.reload({ stream: true }));
+        .pipe(gulp.dest(config.dest));
 }

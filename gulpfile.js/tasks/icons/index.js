@@ -1,4 +1,3 @@
-var browserSync      = require('browser-sync');
 var gulp             = require('gulp');
 var iconfont         = require('gulp-iconfont');
 var config           = require('../../config/icons');

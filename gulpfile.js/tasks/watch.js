@@ -6,14 +6,10 @@ var icons  = require('../config/icons');
 var images = require('../config/images');
 var sass   = require('../config/sass');
 var server = require('../config/server');
-var videos = require('../config/videos');
 
-gulp.task('watch', ['browser-sync'], function () {
+gulp.task('watch', function () {
     watch(images.src, function () {
         gulp.start('images');
-    });
-    watch(videos.src, function () {
-        gulp.start('videos');
     });
     watch(fonts.src, function () {
         gulp.start('fonts');
