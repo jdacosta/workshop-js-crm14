@@ -5,6 +5,6 @@ module.exports = {
     dest: config.publicAssets + '/js/',
     browserify: {
         entries: [config.sourceAssets + '/js/app.js'],
-        debug: false
+        debug: true
     }
 };

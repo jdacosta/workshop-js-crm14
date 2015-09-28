@@ -1,6 +1,6 @@
 var browserify   = require('browserify');
 var gulp         = require('gulp');
-var babel        = require('gulp-babel');
+var babelify     = require('babelify');
 var sourcemaps   = require('gulp-sourcemaps');
 var uglify       = require('gulp-uglify');
 var gutil        = require('gulp-util');
@@ -20,13 +20,15 @@ bwatch.on('update', bundle);
 bwatch.on('log', gutil.log);
 
 function bundle () {
-    return bwatch.bundle()
+    return bwatch
+        .add(require.resolve('babel/polyfill'))
+        .transform(babelify.configure({ignore: ['node_modules', 'bower_components']}))
+        .bundle()
+        .on('error', handleErrors)
         .pipe(source(config.name))
         .pipe(buffer())
         .pipe(sourcemaps.init({loadMaps: true}))
-        .pipe(babel())
         .pipe(uglify())
-        .on('error', handleErrors)
         .pipe(sourcemaps.write(maps.dest))
         .pipe(gulp.dest(config.dest));
 }
