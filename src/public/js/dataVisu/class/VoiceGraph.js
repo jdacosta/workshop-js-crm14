@@ -27,6 +27,10 @@ class VoiceGraph extends Graph {
     this.mesh.rotation.y += 0.02;
   }
 
+  setSound(sound) {
+  	console.log(sound);
+  }
+
   getObject() {
   	return this.mesh;
   }

@@ -1,4 +1,5 @@
-import VoiceGraph from './class/VoiceGraph';
+// import VoiceGraph from './class/VoiceGraph';
+import SoundAnalyser from './class/SoundAnalyser';
 
 /**
  * DataVisuManager
@@ -11,7 +12,9 @@ class DataVisuManager {
    * @return {}
    */
   constructor(SceneManager) {
-    this.voiceGprah;
+    // Graphics
+    this.backgroundAnalyser;
+    this.voiceAnalyser;
 
     // Data (voice, music stream...)
     this.data = {
@@ -28,15 +31,24 @@ class DataVisuManager {
    * @return {void}
    */
    init() {
-    // Create graphs
-    this.voiceGprah = new VoiceGraph(this.data.voice);
-    
+
     // Add objetcs to the scene
-    this.SceneManager.add(this.voiceGprah.getObject());
+    // this.SceneManager.add(this.voiceGprah.getObject());
+  }
+
+  initBackgroundGraphSound(sound) {
+    // Create graphs
+    this.backgroundAnalyser = new SoundAnalyser(sound);
+    this.SceneManager.add(this.backgroundAnalyser.getObject());
+
+    // Create second graphs
+    this.voiceAnalyser = new SoundAnalyser(sound, 1.5, 0xffff00);
+    this.SceneManager.add(this.voiceAnalyser.getObject());
   }
 
   render() {
-    this.voiceGprah.render();
+    this.backgroundAnalyser.render();
+    this.voiceAnalyser.render();
   }
 }
 

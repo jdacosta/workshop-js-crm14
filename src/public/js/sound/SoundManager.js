@@ -46,7 +46,6 @@ class SoundManager extends EventEmitter {
 	}
 
   handleComplete(event) {
-  	console.log('handleComplete');
     this.emit('handleComplete');
   }
 

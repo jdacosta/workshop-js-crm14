@@ -25,16 +25,24 @@ class App extends EventEmitter {
   	// Init dataVisuManager
 	this.dataVisuManager.init();
 
-	// Listen render event
-	this.sceneManager.on('render', this.render.bind(this));
-
 	// Listen event and Init SoundManager
     this.soundManager.on('soundManagerLoaded', this.onSoundManagerLoaded.bind(this));
     this.soundManager.init();
   }
 
+  /**
+   * SounsManager loaded
+   * @return {void}
+   */
   onSoundManagerLoaded() {
-  	this.soundManager.playSound('bugs', 0.5);
+  	// Play background sound
+  	let sound = this.soundManager.playSound('broken-robot', 0.5, 1);
+
+  	// Init background graph with the sound
+  	this.dataVisuManager.initBackgroundGraphSound(sound);
+
+  	// Listen render event
+	this.sceneManager.on('render', this.render.bind(this));
   }
 
   render() {

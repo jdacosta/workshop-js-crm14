@@ -12,7 +12,8 @@ class SceneManager extends EventEmitter {
 		// ThreeJS
 		this.scene;
   	this.camera;
-  	this.renderer;
+    this.renderer;
+  	this.light;
 
     // Stats
     this.stats;
@@ -29,9 +30,13 @@ class SceneManager extends EventEmitter {
     this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
     this.camera.position.z = 1000;
 
-      // Config renderer
+    // Config renderer
     this.renderer = new THREE.WebGLRenderer();
     this.renderer.setSize(window.innerWidth, window.innerHeight);
+
+    this.light = new THREE.DirectionalLight( 0xffffff );
+    this.light.position.set( 0, 0, 1 );
+    this.scene.add(this.light);
 
     // Add to the dom
     document.body.appendChild(this.renderer.domElement);
