@@ -35,16 +35,13 @@ class DataVisuManager {
    * @return {void}
    */
    init() {
-
-    // Add objetcs to the scene
-    // this.SceneManager.add(this.voiceGprah.getObject());
+     // Video
+     this.video = new Video();
+     this.SceneManager.add(this.video.getObject());
   }
 
   initBackgroundGraphSound(sound) {
-    // Video
-    this.video = new Video();
-    this.SceneManager.add(this.video.getObject());
-    
+
     // Create graph
     this.backgroundAnalyser = new CircleAnalyser(sound, 0.5, true);
     this.SceneManager.add(this.backgroundAnalyser.getObject());

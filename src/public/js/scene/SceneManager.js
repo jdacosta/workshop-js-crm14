@@ -1,6 +1,13 @@
 import THREE from 'three';
 import Events from 'events';
 import Stats from 'stats.js';
+import DigitalGlitch from '../../data/shaders/DigitalGlitch.js';
+import CopyShader from '../../data/shaders/CopyShader.js';
+import RenderPass from '../../data/postprocessing/RenderPass.js';
+import ShaderPass from '../../data/postprocessing/ShaderPass.js';
+import MaskPass from '../../data/postprocessing/MaskPass.js';
+import GlitchPass from '../../data/postprocessing/GlitchPass.js';
+import EffectComposer from '../../data/postprocessing/EffectComposer.js';
 
 const EventEmitter = Events.EventEmitter;
 
@@ -14,6 +21,8 @@ class SceneManager extends EventEmitter {
   	this.camera;
     this.renderer;
   	this.light;
+  	this.composer;
+  	this.glitchPass;
 
     // Stats
     this.stats;
@@ -42,6 +51,20 @@ class SceneManager extends EventEmitter {
     // Add to the dom
     document.body.appendChild(this.renderer.domElement);
 
+		this.composer = new THREE.EffectComposer(this.renderer);
+		this.composer.addPass( new THREE.RenderPass(this.scene, this.camera));
+
+		// Create Glitch
+		this.glitchPass = new THREE.GlitchPass();
+		this.glitchPass.renderToScreen = true;
+		this.glitchPass.goWild= true;
+
+		setTimeout(() => {
+			this.glitchPass.goWild= false;
+		}, 5000);
+
+		this.composer.addPass(this.glitchPass);
+
     // Launch render
     requestAnimationFrame(this.render.bind(this));
 
@@ -57,7 +80,8 @@ class SceneManager extends EventEmitter {
 		this.stats.begin();
 
 		this.emit('render');
-		this.renderer.render(this.scene, this.camera);
+		// this.renderer.render(this.scene, this.camera);
+		this.composer.render();
 
 		this.stats.end();
 

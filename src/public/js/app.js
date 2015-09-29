@@ -39,6 +39,7 @@ class App extends EventEmitter {
   	let sound = this.soundManager.playSound('broken-robot', 1, 1);
 
   	// Init background graph with the sound
+  	this.dataVisuManager.init(sound);
   	this.dataVisuManager.initBackgroundGraphSound(sound);
 
     // Listen render
