@@ -17,7 +17,7 @@ class DataVisuManager {
     // Data (voice, music stream...)
     this.data = {
       voice: [],
-      music: []
+      music: [],
     };
 
     // THREE variables
@@ -50,7 +50,7 @@ class DataVisuManager {
     this.geometry = new THREE.BoxGeometry(200, 200, 200);
     this.material = new THREE.MeshBasicMaterial({
       color: 0xff0000,
-      wireframe: true
+      wireframe: true,
     });
 
     // Create graphs
@@ -58,7 +58,7 @@ class DataVisuManager {
     this.mesh = new THREE.Mesh(this.geometry, this.material);
 
     // Add objetcs to the scene
-    this.scene.add( this.mesh );
+    this.scene.add(this.mesh);
 
     // Config renderer
     this.renderer = new THREE.WebGLRenderer();
@@ -66,6 +66,9 @@ class DataVisuManager {
 
     // Add to the dom
     document.body.appendChild(this.renderer.domElement);
+
+    // Launch render
+    requestAnimationFrame(this.render.bind(this));
   }
 
   /**
@@ -84,7 +87,7 @@ class DataVisuManager {
     this.stats.end();
 
     // Re-render each frame
-    requestAnimationFrame(this.render);
+    requestAnimationFrame(this.render.bind(this));
   }
 
   /**
@@ -94,7 +97,7 @@ class DataVisuManager {
   initStats() {
     // Stats
     this.stats = new Stats();
-    this.stats.setMode( 1 ); // 0: fps, 1: ms, 2: mb
+    this.stats.setMode(0); // 0: fps, 1: ms, 2: mb
 
     // Align top-left
     this.stats.domElement.style.position = 'absolute';

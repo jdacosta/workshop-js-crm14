@@ -27,8 +27,8 @@ function bundle () {
         .on('error', handleErrors)
         .pipe(source(config.name))
         .pipe(buffer())
-        .pipe(sourcemaps.init({loadMaps: true}))
-        .pipe(uglify())
-        .pipe(sourcemaps.write(maps.dest))
+        // .pipe(sourcemaps.init({loadMaps: true}))
+        // .pipe(uglify())
+        // .pipe(sourcemaps.write(maps.dest))
         .pipe(gulp.dest(config.dest));
 }

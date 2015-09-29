@@ -12,7 +12,6 @@ class App {
   }
 
   init() {
-    console.log('initiated');
     this.dataVisuManager.init();
     this.speechApiManager.init();
     this.webcamRtcManager.init();
