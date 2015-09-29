@@ -1,5 +1,7 @@
 // import VoiceGraph from './class/VoiceGraph';
-import SoundAnalyser from './class/SoundAnalyser';
+import CircleAnalyser from './class/CircleAnalyser';
+import InlineAnalyser from './class/InlineAnalyser';
+import Video from './class/Video';
 
 /**
  * DataVisuManager
@@ -14,7 +16,9 @@ class DataVisuManager {
   constructor(SceneManager) {
     // Graphics
     this.backgroundAnalyser;
-    this.voiceAnalyser;
+    this.inlineAnalyser;
+    this.backgroundAnalyserTransparent;
+    this.video;
 
     // Data (voice, music stream...)
     this.data = {
@@ -37,18 +41,28 @@ class DataVisuManager {
   }
 
   initBackgroundGraphSound(sound) {
-    // Create graphs
-    this.backgroundAnalyser = new SoundAnalyser(sound);
+    // Video
+    this.video = new Video();
+    this.SceneManager.add(this.video.getObject());
+    
+    // Create graph
+    this.backgroundAnalyser = new CircleAnalyser(sound, 0.5, true);
     this.SceneManager.add(this.backgroundAnalyser.getObject());
 
+    // Create sub transparent graph
+    this.backgroundAnalyserTransparent = new CircleAnalyser(sound, 0.5, false, 1.1, 0.5);
+    this.SceneManager.add(this.backgroundAnalyserTransparent.getObject());
+
     // Create second graphs
-    this.voiceAnalyser = new SoundAnalyser(sound, 1.5, 0xffff00);
-    this.SceneManager.add(this.voiceAnalyser.getObject());
+    this.inlineAnalyser = new InlineAnalyser(sound, 1);
+    this.SceneManager.add(this.inlineAnalyser.getObject());
   }
 
   render() {
     this.backgroundAnalyser.render();
-    this.voiceAnalyser.render();
+    this.inlineAnalyser.render();
+    this.backgroundAnalyserTransparent.render();
+    // this.video.render();
   }
 }
 

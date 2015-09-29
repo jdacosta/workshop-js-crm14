@@ -5,7 +5,7 @@ import Stats from 'stats.js';
 const EventEmitter = Events.EventEmitter;
 
 class SceneManager extends EventEmitter {
-	
+
 	constructor() {
 		super();
 
@@ -27,15 +27,16 @@ class SceneManager extends EventEmitter {
     this.scene = new THREE.Scene();
 
     // Camera
-    this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
+    this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
+		this.camera.aspect = window.innerWidth / window.innerHeight;
     this.camera.position.z = 1000;
 
     // Config renderer
     this.renderer = new THREE.WebGLRenderer();
     this.renderer.setSize(window.innerWidth, window.innerHeight);
 
-    this.light = new THREE.DirectionalLight( 0xffffff );
-    this.light.position.set( 0, 0, 1 );
+    this.light = new THREE.PointLight( 0xffffff );
+    this.light.position.set( 0, 250, 0);
     this.scene.add(this.light);
 
     // Add to the dom
@@ -84,6 +85,6 @@ class SceneManager extends EventEmitter {
 	add(object) {
 		return this.scene.add(object);;
 	}
-} 
+}
 
 export default SceneManager;

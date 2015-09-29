@@ -19,6 +19,7 @@ class SoundManager extends EventEmitter {
 		}];
 
 		this.count = 0;
+		this.soundMute = true;
 	}
 
 	init() {
