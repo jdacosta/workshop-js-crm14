@@ -43,16 +43,17 @@ class DataVisuManager {
   initBackgroundGraphSound(sound) {
 
     // Create graph
-    this.backgroundAnalyser = new CircleAnalyser(sound, 0.5, true);
+    this.backgroundAnalyser = new CircleAnalyser(sound, 0.45, true);
     this.SceneManager.add(this.backgroundAnalyser.getObject());
 
     // Create sub transparent graph
-    this.backgroundAnalyserTransparent = new CircleAnalyser(sound, 0.5, false, 1.1, 0.5);
+    this.backgroundAnalyserTransparent = new CircleAnalyser(sound, 0.45, false, 1.02);
     this.SceneManager.add(this.backgroundAnalyserTransparent.getObject());
 
     // Create second graphs
     this.inlineAnalyser = new InlineAnalyser(sound, 1);
     this.SceneManager.add(this.inlineAnalyser.getObject());
+    this.SceneManager.add(this.inlineAnalyser.frame());
   }
 
   render() {

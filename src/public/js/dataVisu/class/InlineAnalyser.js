@@ -70,6 +70,19 @@ export default class InlineAnalyser extends SoundAnalyser {
     this.geometry.verticesNeedUpdate = true;
   }
 
+  frame() {
+    let material = new THREE.LineBasicMaterial({
+        color: 0x0000ff
+    });
+    let geometry = new THREE.Geometry();
+    this.geometry.vertices.push(new THREE.Vector3(-10, 0, 0));
+    this.geometry.vertices.push(new THREE.Vector3(0, 10, 0));
+    this.geometry.vertices.push(new THREE.Vector3(10, 0, 0));
+    let line = new THREE.Line(geometry, material);
+
+    return line;
+  }
+
   getObject() {
   	return this.object;
   }
