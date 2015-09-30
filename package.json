@@ -15,14 +15,17 @@
     "node": "0.12.0"
   },
   "browser": {
+    "face": "./bower_components/tracking/build/data/face.js",
     "jquery": "./node_modules/jquery/dist/jquery.js",
     "soundjs": "./bower_components/createjs-soundjs/lib/soundjs-0.6.1.combined.js",
-    "three": "./node_modules/three/three.js"
+    "three": "./node_modules/three/three.js",
+    "tracking": "./bower_components/tracking/build/tracking.js"
   },
   "browserify-shim": {
     "jquery": "$",
     "soundjs": "createjs",
-    "three": "THREE"
+    "three": "THREE",
+    "tracking": "tracking"
   },
   "browserify": {
     "transform": [
@@ -44,8 +47,7 @@
     "socket.io": "~1.3.7",
     "stats.js": "^1.0.0",
     "speechjs": "~0.0.1",
-    "three": "~0.72.0",
-    "tracking": "~1.1.1"
+    "three": "~0.72.0"
   },
   "devDependencies": {
     "babel": "~5.8.23",
