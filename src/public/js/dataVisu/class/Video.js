@@ -19,9 +19,9 @@ export default class Video {
     };
 
     this.material = new THREE.MeshBasicMaterial( { map: this.texture, overdraw: true, side:THREE.DoubleSide } );
-    this.geometry = new THREE.BoxGeometry(this.xsize, this.ysize, 1);
+    this.geometry = new THREE.PlaneGeometry(this.xsize, this.ysize, 1);
     this.object = new THREE.Mesh(this.geometry, this.material);
-    this.object.position.z = -5;
+    this.object.position.z = 0;
   }
 
   getObject() {

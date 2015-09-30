@@ -27,6 +27,9 @@ export default class SoundAnalyser {
     // Connect analyser
     this.analyser.connect(this.context.destination);
 
+    this.analyser.smoothingTimeConstant = 0.95;
+    this.analyser.fftSize = 2048;
+
     // Get frequences
     this.freqs = new Uint8Array(this.analyser.frequencyBinCount);
   }

@@ -1,5 +1,6 @@
 // import VoiceGraph from './class/VoiceGraph';
 import CircleAnalyser from './class/CircleAnalyser';
+import CirclePlaneAnalyser from './class/CirclePlaneAnalyser';
 import InlineAnalyser from './class/InlineAnalyser';
 import Video from './class/Video';
 
@@ -15,7 +16,8 @@ class DataVisuManager {
    */
   constructor(SceneManager) {
     // Graphics
-    this.backgroundAnalyser;
+    this.circleAnalyser;
+    this.circlePlaneAnalyser;
     this.inlineAnalyser;
     this.backgroundAnalyserTransparent;
     this.video;
@@ -34,35 +36,40 @@ class DataVisuManager {
    * Init DataVisuManager
    * @return {void}
    */
-   init() {
-
-    // Add objetcs to the scene
-    // this.SceneManager.add(this.voiceGprah.getObject());
+  init(sound) {
+    this.initVideo();
+    this.initAnalysers(sound);
   }
 
-  initBackgroundGraphSound(sound) {
+  initVideo() {
     // Video
     this.video = new Video();
     this.SceneManager.add(this.video.getObject());
-    
+  }
+
+  initAnalysers(sound) {
     // Create graph
-    this.backgroundAnalyser = new CircleAnalyser(sound, 0.5, true);
-    this.SceneManager.add(this.backgroundAnalyser.getObject());
+    this.circleAnalyser = new CirclePlaneAnalyser(sound, 0.45, true);
+    this.SceneManager.add(this.circleAnalyser.getObject());
+
+    this.circlePlaneAnalyser = new CircleAnalyser(sound, 0.45, true);
+    this.SceneManager.add(this.circlePlaneAnalyser.getObject());
 
     // Create sub transparent graph
-    this.backgroundAnalyserTransparent = new CircleAnalyser(sound, 0.5, false, 1.1, 0.5);
-    this.SceneManager.add(this.backgroundAnalyserTransparent.getObject());
+    // this.backgroundAnalyserTransparent = new CircleAnalyser(sound, 0.45, false, 1.02);
+    // this.SceneManager.add(this.backgroundAnalyserTransparent.getObject());
 
     // Create second graphs
     this.inlineAnalyser = new InlineAnalyser(sound, 1);
     this.SceneManager.add(this.inlineAnalyser.getObject());
+    this.SceneManager.add(this.inlineAnalyser.getFrame());
   }
 
   render() {
-    this.backgroundAnalyser.render();
+    this.circleAnalyser.render();
+    this.circlePlaneAnalyser.render();
     this.inlineAnalyser.render();
-    this.backgroundAnalyserTransparent.render();
-    // this.video.render();
+    // this.backgroundAnalyserTransparent.render();
   }
 }
 

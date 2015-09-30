@@ -22,9 +22,6 @@ class App extends EventEmitter {
   }
 
   onSceneManagerLoaded() {
-  	// Init dataVisuManager
-    this.dataVisuManager.init();
-
     // Listen event and Init SoundManager
     this.soundManager.on('soundManagerLoaded', this.onSoundManagerLoaded.bind(this));
     this.soundManager.init();
@@ -36,10 +33,10 @@ class App extends EventEmitter {
    */
   onSoundManagerLoaded() {
   	// Play background sound
-  	let sound = this.soundManager.playSound('broken-robot', 1, 1);
+  	let sound = this.soundManager.playSound('un-momento', 1, 1);
 
-  	// Init background graph with the sound
-  	this.dataVisuManager.initBackgroundGraphSound(sound);
+  	// Init data visu manager
+  	this.dataVisuManager.init(sound);
 
     // Listen render
   	this.sceneManager.on('render', this.render.bind(this));
