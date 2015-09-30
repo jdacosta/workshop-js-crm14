@@ -1,5 +1,6 @@
 import Events from 'events';
 import peerjs from 'peerjs';
+import config from '../../../../servers/config/config';
 
 const EventEmitter = Events.EventEmitter;
 
@@ -111,7 +112,7 @@ class Peer extends EventEmitter {
     // TODO export config
     this.peerInstance = new peerjs(
       this.userId, {
-        host: '192.168.31.56', port: 1337, path: '/peer',
+        host: config.server.host, port: config.server.port, path: '/peer',
         config: {
           'iceServers': [
             { url: 'stun:stun1.l.google.com:19302' },
