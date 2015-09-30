@@ -2,7 +2,7 @@ import THREE from 'three';
 import SoundAnalyser from './SoundAnalyser';
 
 export default class CirclePlaneAnalyser extends SoundAnalyser {
-  constructor(sound, size, color, amplitude) {
+  constructor(sound, config) {
     super(sound);
 
     // ThreeJS variables
@@ -10,18 +10,19 @@ export default class CirclePlaneAnalyser extends SoundAnalyser {
     this.material;
     this.object;
     this.group;
-
-    // Objetcs configs
-    this.size = size || 1;
-    this.color = color ? null : true || true;
-    this.amplitude = amplitude || 1;
-    this.fusion = 4;
-    this.radius = 40;
-    this.ease = 0.05;
-
-    this.ecart = this.analyser.frequencyBinCount / this.fusion;
-
     this.planes = [];
+
+    // Visual configs
+    this.particuleSize = config.particuleSize || 1;
+    this.color = config.color || 0xffff00;
+    this.ease = config.ease || 0.35;
+    this.rotation = config.rotation || 0.006; 
+    this.division = config.division || 5;
+    this.fusion = config.fusion || 4;
+    this.opacity = config.opacity || 1;
+    
+    this.radius = window.innerHeight / 4 - 30;
+    this.ecart = this.analyser.frequencyBinCount / this.fusion;
 
     // Initiate analyser
     this.init();
@@ -34,24 +35,15 @@ export default class CirclePlaneAnalyser extends SoundAnalyser {
     this.geometry.colorsNeedUpdate = true;
 
     this.group = new THREE.Group();
-    // this.group.position.y = 50;
 
     let geometry = new THREE.PlaneGeometry( 2, 2, 32 );
+
     let material = new THREE.MeshBasicMaterial({
-      color: 0xffff00, 
-      side: THREE.DoubleSide
+      color: this.color,
+      side: THREE.DoubleSide,
+      transparent: true,
+      opacity: this.opacity
     });
-
-  //   let materialConfig = {
-  //     // color: 0xffffff,
-  //     opacity: 0.7,
-  //     linewidth: 1,
-  //     vertexColors: THREE.VertexColors
-  //   };
-
-  //   this.material = new THREE.LineBasicMaterial(materialConfig);
-  //   this.object = new THREE.Line(this.geometry, this.material);
-  //   this.object.position.z = 5;
 
     for (let i = 0; i < this.ecart; i++) {
       let value = this.radius;
@@ -64,13 +56,11 @@ export default class CirclePlaneAnalyser extends SoundAnalyser {
       plane.position.y = y;
       plane.rotation.z = theta;
 
-        // stocke les planes
+      // stocke les planes
       this.planes.push(plane);
 
       this.group.add(plane);
     }
-
-  //   this.geometry.vertices.push(new THREE.Vector3(this.geometry.vertices[0].x, this.geometry.vertices[0].y, 0));
   }
 
   render() {
@@ -83,7 +73,7 @@ export default class CirclePlaneAnalyser extends SoundAnalyser {
         moy += this.freqs[i * this.fusion + o];
       }
 
-      moy /= 5;
+      moy /= this.division;
       value += moy;
 
       let theta = (i / this.ecart) * Math.PI * 2;
@@ -99,11 +89,15 @@ export default class CirclePlaneAnalyser extends SoundAnalyser {
       let vx = dx * this.ease;
       let vy = dy * this.ease;
 
+      this.planes[i].scale.x = this.particuleSize;
+      this.planes[i].scale.y = this.particuleSize;
+      this.planes[i].scale.z = this.particuleSize;
+
       this.planes[i].position.x += vx;
       this.planes[i].position.y += vy;
     }
 
-    this.group.rotation.z -= 0.006;
+    this.group.rotation.z -= this.rotation;
   }
 
   getObject() {

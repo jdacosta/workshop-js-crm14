@@ -41,7 +41,10 @@ class App extends EventEmitter {
    */
   onSoundManagerLoaded() {
     // Play background sound
-    let sound = this.soundManager.playSound('un-momento', 1, 1);
+    let sound = this.soundManager.playSound('un-momento', 0, 1);
+    
+    //sound.setVolume(0);
+    //sound.setMuted(true);
 
     // Init data visu manager
     this.dataVisuManager.init(sound);

@@ -37,7 +37,7 @@ class SceneManager extends EventEmitter {
 
     // Camera
     this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
-		this.camera.aspect = window.innerWidth / window.innerHeight;
+		this.camera.aspect = 1920 / 1080;
     this.camera.position.z = 1000;
 
     // Config renderer
@@ -95,6 +95,7 @@ class SceneManager extends EventEmitter {
 		this.stats.begin();
 
 		this.emit('render');
+
 		// this.renderer.render(this.scene, this.camera);
 		this.composer.render();
 
