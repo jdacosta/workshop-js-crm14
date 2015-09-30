@@ -22,7 +22,7 @@ class SoundManager extends EventEmitter {
 		}];
 
 		this.count = 0;
-		this.soundMute = true;
+		this.soundMute = false;
 	}
 
 	init() {
@@ -57,6 +57,7 @@ class SoundManager extends EventEmitter {
 
     if (loop) {
         sound = SoundJs.Sound.play(soundID, null, null, null, -1);
+
     } else {
         sound = SoundJs.Sound.play(soundID);
     }

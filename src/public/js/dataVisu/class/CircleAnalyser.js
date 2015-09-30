@@ -2,28 +2,30 @@ import THREE from 'three';
 import SoundAnalyser from './SoundAnalyser';
 
 export default class CircleAnalyser extends SoundAnalyser {
-  constructor(sound, size, color, amplitude) {
+  constructor(sound, config) {
     super(sound);
-
+// size, color, amplitude
     // ThreeJS variables
     this.geometry;
     this.material;
     this.object;
 
     // Objetcs configs
-    this.size = size || 1;
-    this.color = color ? null : true || true;
-    this.amplitude = amplitude || 1;
-    this.fusion = 8;
-    this.radius = 50;
-    this.ease = 0.15;
+    this.linewidth = config.linewidth || 1;
+    this.color = config.color != undefined ? config.color : true;
+    this.fusion = config.fusion || 8;
+    this.division = config.division || 10;
+    this.radius = config.radius || (window.innerHeight / 4);
+    this.ease = config.ease || 0.15;
+    this.opacity = config.opacity || 1;
+    this.rotation = config.rotation || 0.006;
 
     // Initiate analyser
     this.init();
   }
 
   init() {
-    // Create gemotry object
+    // Create gemoetry object
     this.geometry = new THREE.Geometry();
     this.geometry.verticesNeedUpdate = true;
     this.geometry.colorsNeedUpdate = true;
@@ -41,10 +43,11 @@ export default class CircleAnalyser extends SoundAnalyser {
     this.geometry.colors = colors;
 
     let materialConfig = {
-      // color: 0xffffff,
       opacity: 0.7,
-      linewidth: 1,
-      vertexColors: THREE.VertexColors
+      linewidth: this.linewidth,
+      vertexColors: THREE.VertexColors,
+      transparent: true,
+      opacity: this.opacity
     };
 
     this.material = new THREE.LineBasicMaterial(materialConfig);
@@ -76,7 +79,7 @@ export default class CircleAnalyser extends SoundAnalyser {
         moy += this.freqs[i * this.fusion + o];
       }
 
-      moy /= 10;
+      moy /= this.division;
       value += moy;
 
       let theta = (i / ecart) * Math.PI * 2;
@@ -98,7 +101,7 @@ export default class CircleAnalyser extends SoundAnalyser {
     this.geometry.verticesNeedUpdate = true;
     this.geometry.colorsNeedUpdate = true;
 
-    this.object.rotation.z -= 0.006;
+    this.object.rotation.z -= this.rotation;
   }
 
   getObject() {

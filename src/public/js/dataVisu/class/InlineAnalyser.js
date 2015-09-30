@@ -2,8 +2,12 @@ import THREE from 'three';
 import SoundAnalyser from './SoundAnalyser';
 
 export default class InlineAnalyser extends SoundAnalyser {
-  constructor(sound, size, color) {
+  constructor(sound, config = {}) {
     super(sound);
+
+    if(config.frame == undefined) {
+      config.frame = {};
+    }
 
     // ThreeJS variables
     this.geometry;
@@ -11,11 +15,14 @@ export default class InlineAnalyser extends SoundAnalyser {
     this.object;
 
     // Objetcs configs
-    this.color = color || 0xffffff;
-    this.margin = 20;
-    this.radius = 50;
-    this.fusion = 4;
-    this.ease = 0.2;
+    this.color = config.color || 0xffffff;
+    this.margin = config.margin || 20;
+    this.height = config.height || 50;
+    this.fusion = config.fusion || 4;
+    this.ease = config.ease || 0.2;
+    this.opacity = config.opacity || 1;
+    this.linewidth = config.linewidth || 1;
+
     this.windowWidth = window.innerWidth;
     this.espacement = ((this.windowWidth - (this.margin * 2)) / (this.analyser.frequencyBinCount/ this.fusion));
 
@@ -23,7 +30,12 @@ export default class InlineAnalyser extends SoundAnalyser {
     this.frame = {
       geometry: null,
       material: null,
-      line: null
+      line: null,
+      config: {
+        linewidth: config.frame.linewidth || 1,
+        opacity: config.frame.opacity || 1,
+        color: config.frame.color || 0xffffff
+      }
     };
 
     // Initiate analyser
@@ -52,8 +64,9 @@ export default class InlineAnalyser extends SoundAnalyser {
     // Add materials
     this.material = new THREE.LineBasicMaterial({
       color: this.color,
-      opacity: 0.7,
-      linewidth: 1
+      transparent: true,
+      opacity: this.opacity,
+      linewidth: this.linewidth
     });
 
     // Create object
@@ -66,7 +79,7 @@ export default class InlineAnalyser extends SoundAnalyser {
     // Initialize the curve
     let ecart = this.analyser.frequencyBinCount / this.fusion;
     for (let i = 0; i < ecart; i++) {
-      let value = this.radius;
+      let value = this.height;
       let theta = (i / ecart) * Math.PI * 2;
       let x = i + this.espacement;
       let y = value;
@@ -77,8 +90,10 @@ export default class InlineAnalyser extends SoundAnalyser {
   initFrame() {
     // Create frame material
     this.frame.material = new THREE.LineBasicMaterial({
-        color: 0xffffff,
-        linewidth: 1
+        color: this.frame.config.color,
+        transparent: true,
+        opacity: this.frame.config.opacity,
+        linewidth: this.frame.config.linewidth
     });
     
     // Create geometry object
