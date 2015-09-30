@@ -14,11 +14,8 @@ class SoundManager extends EventEmitter {
 			path: '../assets/sounds/bugs.wav',
 			name: 'bugs'
 		}, {
-			path: '../assets/sounds/nurning-man.wav',
+			path: '../assets/sounds/burning-man.wav',
 			name: 'burning-man'
-		}, {
-			path: '../assets/sounds/un-momento.mp3',
-			name: 'un-momento'
 		}];
 
 		this.count = 0;

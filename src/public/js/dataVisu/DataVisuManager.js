@@ -18,7 +18,7 @@ class DataVisuManager {
     // Graphics
     this.circleAnalyser;
     this.circle2Analyser;
-    
+
     this.circleParticulte1Analyser;
     this.circleParticulte2Analyser;
     this.circleParticulte3Analyser;
@@ -92,7 +92,7 @@ class DataVisuManager {
     });
 
     this.SceneManager.add(this.circleAnalyser.getObject());
-    
+
     // Create second circle analyser
     let radiusCircle2Analyser = (window.innerHeight / 4) + 20;
     this.circle2Analyser = new CircleAnalyser(sound, {
@@ -106,10 +106,34 @@ class DataVisuManager {
 
     // Create second graphs
     this.inlineAnalyser = new InlineAnalyser(sound, {
-      test: 'test'
+      width: 500,
+      height: 100,
+      opacity: 0.5,
+      frame: {
+        opacity: 0.5
+      }
     });
     this.SceneManager.add(this.inlineAnalyser.getObject());
-    this.SceneManager.add(this.inlineAnalyser.getFrame());
+    // this.SceneManager.add(this.inlineAnalyser.getFrame());
+  }
+
+  initSmallAnalyser1(sound) {
+    this.smallAnalayser1 = new InlineAnalyser(sound, {
+      width: 250,
+      height: 100,
+      opacity: 0.5,
+      positionX: 550,
+      linewidth: 2,
+      frame: {
+        opacity: 0.5
+      },
+      grid: {
+        color: 0xff0000
+      }
+    });
+
+    this.SceneManager.add(this.smallAnalayser1.getObject());
+    // this.SceneManager.add(this.smallAnalayser1.getFrame());
   }
 
   render() {
@@ -120,6 +144,9 @@ class DataVisuManager {
     this.circleParticulte1Analyser.render();
     this.circleParticulte2Analyser.render();
     this.circleParticulte3Analyser.render();
+
+    // Small analysers
+    this.smallAnalayser1.render();
 
     this.inlineAnalyser.render();
   }

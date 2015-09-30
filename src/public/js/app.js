@@ -41,13 +41,12 @@ class App extends EventEmitter {
    */
   onSoundManagerLoaded() {
     // Play background sound
-    let sound = this.soundManager.playSound('un-momento', 0, 1);
-    
-    //sound.setVolume(0);
-    //sound.setMuted(true);
+    let sound = this.soundManager.playSound('bugs', 0, 1);
+    let sound2 = this.soundManager.playSound('burning-man', 0, 1);
 
     // Init data visu manager
     this.dataVisuManager.init(sound);
+    this.dataVisuManager.initSmallAnalyser1(sound2);
 
     // Listen render
     this.sceneManager.on('render', this.render.bind(this));

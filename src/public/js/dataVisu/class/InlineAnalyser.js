@@ -17,20 +17,29 @@ export default class InlineAnalyser extends SoundAnalyser {
     // Objetcs configs
     this.color = config.color || 0xffffff;
     this.margin = config.margin || 20;
-    this.height = config.height || 50;
     this.fusion = config.fusion || 4;
-    this.ease = config.ease || 0.2;
+    this.ease = config.ease || 0.5;
     this.opacity = config.opacity || 1;
     this.linewidth = config.linewidth || 1;
+    this.width = config.width || window.innerWidth
+    this.height = config.height || window.innerHeight
+    this.positionX = config.positionX || 0;
+    this.positionY = config.positionY || 0;
+    this.grid = config.grid != undefined ? config.grid : true;
+    this.rows = config.rows || 4;
+    this.columns = config.columns || 10;
 
-    this.windowWidth = window.innerWidth;
-    this.espacement = ((this.windowWidth - (this.margin * 2)) / (this.analyser.frequencyBinCount/ this.fusion));
+    this.espacement = (this.width / (this.analyser.frequencyBinCount/ this.fusion));
+
+    this.group = new THREE.Group();
 
     // Frame
     this.frame = {
       geometry: null,
       material: null,
       line: null,
+      columns: null,
+      rows: null,
       config: {
         linewidth: config.frame.linewidth || 1,
         opacity: config.frame.opacity || 1,
@@ -45,6 +54,10 @@ export default class InlineAnalyser extends SoundAnalyser {
   init() {
     this.initAnalyser();
     this.initFrame();
+
+    if(this.grid) {
+      this.drawGrid();
+    }
   }
 
   initAnalyser() {
@@ -72,14 +85,16 @@ export default class InlineAnalyser extends SoundAnalyser {
     // Create object
     this.object = new THREE.Line(this.geometry, this.material);
 
-    // Object position
-    this.object.position.y = -window.innerHeight / 2 + this.margin;
-    this.object.position.x = -window.innerWidth / 2 + this.margin;
+    // Group position
+    this.group.position.y = (-window.innerHeight / 2 + this.margin) + this.positionY - (this.height / 5);
+    this.group.position.x = (-window.innerWidth / 2 + this.margin) + this.positionX;
+
+    this.group.add(this.object);
 
     // Initialize the curve
     let ecart = this.analyser.frequencyBinCount / this.fusion;
     for (let i = 0; i < ecart; i++) {
-      let value = this.height;
+      let value = this.height / 2;
       let theta = (i / ecart) * Math.PI * 2;
       let x = i + this.espacement;
       let y = value;
@@ -87,6 +102,52 @@ export default class InlineAnalyser extends SoundAnalyser {
     }
   }
 
+  drawGrid() {
+    // Create frame material
+    let material = new THREE.LineBasicMaterial({
+      color: this.grid.color || 0xffffff,
+      transparent: true,
+      opacity: this.grid.opacity || 0.2,
+      linewidth: this.grid.linewidth || 0.5
+    });
+
+    // Create geometry object
+
+    let espacement = this.width / (this.columns + 1);
+
+    // Create columns
+    for (var i = 0; i < this.columns; i++) {
+      let geometry = new THREE.Geometry();
+
+      geometry.vertices.push(new THREE.Vector3(i * espacement + espacement, 0, 0));
+      geometry.vertices.push(new THREE.Vector3(i * espacement + espacement, this.height, 0));
+      let column = new THREE.Line(geometry, material);
+
+      this.group.add(column);
+    }
+
+    espacement = this.height / (this.rows + 1);
+
+    // Create rows
+    for (var i = 0; i < this.rows; i++) {
+      let geometry = new THREE.Geometry();
+
+      geometry.vertices.push(new THREE.Vector3(0, i * espacement + espacement, 0));
+      geometry.vertices.push(new THREE.Vector3(this.width, i * espacement + espacement, 0));
+
+      let row = new THREE.Line(geometry, material);
+
+      row.position.x = 0;
+      row.position.y = 0;
+
+      this.group.add(row);
+    }
+  }
+
+  /**
+   * Draw a frame around the curve
+   * @return {void}
+   */
   initFrame() {
     // Create frame material
     this.frame.material = new THREE.LineBasicMaterial({
@@ -95,38 +156,40 @@ export default class InlineAnalyser extends SoundAnalyser {
         opacity: this.frame.config.opacity,
         linewidth: this.frame.config.linewidth
     });
-    
+
     // Create geometry object
     this.frame.geometry = new THREE.Geometry();
-      
+
     // Add vertices
     this.drawFrame();
 
     // Create line
     this.frame.line = new THREE.Line(this.frame.geometry, this.frame.material);
 
+    this.group.add(this.frame.line);
+
     // Frame position
-    this.frame.line.position.y = -window.innerHeight / 2;
-    this.frame.line.position.x = -window.innerWidth / 2;
+    this.frame.line.position.y = 0;
+    this.frame.line.position.x = 0;
   }
 
   drawFrame() {
     this.frame.geometry.vertices = [];
 
     // Bottom Left
-    this.frame.geometry.vertices.push(new THREE.Vector3(this.margin, this.margin, 0));
+    this.frame.geometry.vertices.push(new THREE.Vector3(0, 0, 0));
 
     // Top Left
-    this.frame.geometry.vertices.push(new THREE.Vector3(this.margin, 150, 0));
+    this.frame.geometry.vertices.push(new THREE.Vector3(0, this.height, 0));
 
     // Top Right
-    this.frame.geometry.vertices.push(new THREE.Vector3((window.innerWidth - this.margin), 150, 0));
+    this.frame.geometry.vertices.push(new THREE.Vector3(this.width, this.height, 0));
 
     // Bottom Right
-    this.frame.geometry.vertices.push(new THREE.Vector3((window.innerWidth - this.margin), this.margin, 0));
+    this.frame.geometry.vertices.push(new THREE.Vector3(this.width, 0, 0));
 
     // Close Bottom Left
-    this.frame.geometry.vertices.push(new THREE.Vector3(this.margin, this.margin, 0));
+    this.frame.geometry.vertices.push(new THREE.Vector3(0, 0, 0));
   }
 
   render() {
@@ -156,16 +219,12 @@ export default class InlineAnalyser extends SoundAnalyser {
     }
 
     // Re-render the frame
-    this.drawFrame();
+    // this.drawFrame();
 
     this.geometry.verticesNeedUpdate = true;
   }
 
-  getFrame() {
-    return this.frame.line;
-  }
-
   getObject() {
-  	return this.object;
+  	return this.group;
   }
 }
