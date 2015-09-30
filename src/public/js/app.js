@@ -4,6 +4,7 @@ import DataVisuManager from './dataVisu/DataVisuManager';
 //import SpeechApiManager from './speechApi/SpeechApiManager.js';
 import SoundManager from './sound/SoundManager';
 import WebcamRtcManager from './webcamRtc/WebcamRtcManager.js';
+import Interface from './interface/Interface.js';
 
 const EventEmitter = Events.EventEmitter;
 
@@ -11,6 +12,9 @@ class App extends EventEmitter {
 
   constructor() {
     super();
+
+    // Enable Html Interface
+    this.interface = new Interface();
 
     this.sceneManager = new SceneManager();
     this.dataVisuManager = new DataVisuManager(this.sceneManager);
