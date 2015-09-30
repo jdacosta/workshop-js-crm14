@@ -17,20 +17,4 @@ body {
 main {
     @include size(100%);
     position: absolute;
-
-    .page {
-        @include size(100%);
-        position: absolute;
-        z-index: 1;
-        opacity: 0;
-        background-size: cover;
-
-        &.is-hidden {
-            animation: fadeout 0.5s ease-out;
-        }
-
-        &.is-visible {
-            animation: fadein 1.5s ease-out 0.7s both;
-        }
-    }
 }

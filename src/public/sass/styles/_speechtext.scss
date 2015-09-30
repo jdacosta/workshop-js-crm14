@@ -1,0 +1,22 @@
+.speechtext {
+  @include absolute(top 40% left 30px);
+  z-index: 100;
+
+  p {
+    font: 3em sans-serif;
+    color: red;
+
+    .annecy,
+    .grenoble {
+      font-weight: bold;
+    }
+
+    .annecy {
+      color: blue;
+    }
+
+    .grenoble {
+      color: green;
+    }
+  }
+}

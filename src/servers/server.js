@@ -1,47 +1,29 @@
-var Hapi       = require('hapi'),
-    Inert      = require('inert'),
-    Routes     = require('./config/routes'),
-    Config     = require('./config/config');
-    Connection = require('./manager/connection');
+var express    = require('express'),
+    http       = require('http'),
+    peer       = require('peer').ExpressPeerServer,
+    config     = require('./config/config'),
+    connection = require('./manager/connection');
 
-var app = {}, io;
-app.config = Config;
+var app = express(),
+    server = http.createServer(app),
+    port =  parseInt(process.env.PORT, 10) || config.server.port,
+    io;
 
-var server = new Hapi.Server();
-server.connection({
-    port: parseInt(process.env.PORT, 10) || app.config.server.port,
-    host: app.config.server.host
+// static files
+app.use(express.static(__dirname + '/../public'));
+
+// webRTC server
+app.use('/peer', peer(server, {debug: true}));
+
+// routing
+app.get('/', function (req, res) {
+  res.sendfile('index.html');
 });
 
-server.register([
-  Inert,
-  {
-    register: require('good'),
-    options: {
-      opsInterval: 10000,
-      reporters: [{
-        reporter: require('good-console'),
-        events: {
-          request: '*',
-          log: '*',
-          response: '*',
-          error: '*'
-        }
-      }]
-    }
-  }
-], function (error) {
-  if (error) {
-    console.error(error);
-  } else {
-    io = require('socket.io')(server.listener);
+// socket.io
+io = require('socket.io')(server);
+connection.init(io);
 
-    Connection.init(io);
-
-    server.route(Routes.endpoints);
-
-    server.start(function () {
-      console.log('Server started at: ' + server.info.uri);
-    });
-  }
+server.listen(port, function() {
+  console.log('Server started at: http://' + config.server.host + ':' + config.server.port);
 });

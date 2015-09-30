@@ -25,7 +25,8 @@
 // base
 @import "base/reset";
 @import "base/layout";
-@import "base/header";
-@import "base/footer";
 
 // styles
+@import "styles/frame";
+@import "styles/speechtext";
+@import "styles/video";

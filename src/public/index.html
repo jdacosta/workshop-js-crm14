@@ -7,8 +7,17 @@
 </head>
 <body>
 
-  <p id="textSpeech"></p>
-  <video id="webcam-video" autoplay width="400" height="300"></video>
+  <div class="frame">
+    <div class="top"></div>
+    <div class="right"></div>
+    <div class="bottom"></div>
+    <div class="left"></div>
+  </div>
+
+  <section id="textSpeech" class="speechtext"></section>
+
+  <video id="webcam-video-local" class="local is-visible" autoplay width="200" height="150"></video>
+  <video id="webcam-video-remote" class="remote bg-video is-visible" autoplay width="800" height="600"></video>
 
   <script src="/socket.io/socket.io.js"></script>
   <script src="assets/js/app.js"></script>

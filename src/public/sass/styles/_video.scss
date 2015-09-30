@@ -1,0 +1,28 @@
+video {
+  &.local {
+    @include absolute(bottom 50px right 50px);
+    z-index: 100;
+  }
+
+  &.remote {
+    z-index: 50;
+  }
+}
+
+.bg-video {
+    @include size(auto);
+    @include fixed(top 50% left 50%);
+    min-width: 100%;
+    min-height: 100%;
+    transform: translateX(-50%) translateY(-50%);
+
+    &.is-visible {
+      display: block;
+      //animation: fadein 1.5s linear 0s both;
+    }
+
+    &.is-hidden {
+      display: none;
+      //animation: fadeout 0.1s ease-out;
+    }
+}
