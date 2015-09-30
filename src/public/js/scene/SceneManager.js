@@ -36,9 +36,10 @@ class SceneManager extends EventEmitter {
     this.scene = new THREE.Scene();
 
     // Camera
-    this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
-		this.camera.aspect = 1920 / 1080;
+    this.camera = new THREE.PerspectiveCamera(58, window.innerWidth / window.innerHeight, 1, 10000);
+		this.camera.aspect = window.innerWidth / window.innerHeight;
     this.camera.position.z = 1000;
+    this.camera.updateProjectionMatrix();
 
     // Config renderer
     this.renderer = new THREE.WebGLRenderer();

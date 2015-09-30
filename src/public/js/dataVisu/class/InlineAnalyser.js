@@ -86,8 +86,8 @@ export default class InlineAnalyser extends SoundAnalyser {
     this.object = new THREE.Line(this.geometry, this.material);
 
     // Group position
-    this.group.position.y = (-window.innerHeight / 2 + this.margin) + this.positionY - (this.height / 5);
-    this.group.position.x = (-window.innerWidth / 2 + this.margin) + this.positionX;
+    this.group.position.y = (-window.innerHeight / 2) + this.positionY + 10;
+    this.group.position.x = (-window.innerWidth / 2) + this.positionX;
 
     this.group.add(this.object);
 

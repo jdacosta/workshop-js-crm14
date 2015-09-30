@@ -74,7 +74,7 @@ class DataVisuManager {
     this.circleParticulte3Analyser = new CirclePlaneAnalyser(sound, {
       particuleSize: 1,
       color: 0xffffff,
-      opacity: 0.9,
+      opacity: 0.5,
       rotation: -0.01,
       fusion: 4,
       ease: 0.2,
@@ -98,7 +98,7 @@ class DataVisuManager {
     this.circle2Analyser = new CircleAnalyser(sound, {
       color: true,
       linewidth: 0.5,
-      opacity: 0.5,
+      opacity: 0.25,
       radius: radiusCircle2Analyser
     });
 
@@ -122,9 +122,11 @@ class DataVisuManager {
       width: 250,
       height: 100,
       opacity: 0.5,
+      color: 0xff0000,
       positionX: 550,
       linewidth: 2,
       frame: {
+        color: 0xff0000,
         opacity: 0.5
       },
       grid: {
