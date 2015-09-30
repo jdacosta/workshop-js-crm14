@@ -8,23 +8,26 @@ class SoundManager extends EventEmitter {
 		super();
 
 		this.sounds = [{
-			path: '../assets/sounds/Broken Robot.wav',
+			path: '../assets/sounds/broken-robot.wav',
 			name: 'broken-robot'
 		}, {
-			path: '../assets/sounds/Bugs.wav',
+			path: '../assets/sounds/bugs.wav',
 			name: 'bugs'
 		}, {
-			path: '../assets/sounds/Burning man.wav',
+			path: '../assets/sounds/nurning-man.wav',
 			name: 'burning-man'
+		}, {
+			path: '../assets/sounds/un-momento.mp3',
+			name: 'un-momento'
 		}];
 
 		this.count = 0;
+		this.soundMute = true;
 	}
 
 	init() {
 		// Events
 		SoundJs.Sound.on('fileload', this.loadHandler, this);
-
 		// Loads all sounds
 		this.loadSounds();
 	}
@@ -46,7 +49,6 @@ class SoundManager extends EventEmitter {
 	}
 
   handleComplete(event) {
-  	console.log('handleComplete');
     this.emit('handleComplete');
   }
 

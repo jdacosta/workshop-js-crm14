@@ -2,7 +2,7 @@ import Events from 'events';
 import SceneManager from './scene/SceneManager';
 import DataVisuManager from './dataVisu/DataVisuManager';
 //import SpeechApiManager from './speechApi/SpeechApiManager.js';
-//import SoundManager from './sound/SoundManager';
+import SoundManager from './sound/SoundManager';
 import WebcamRtcManager from './webcamRtc/WebcamRtcManager.js';
 
 const EventEmitter = Events.EventEmitter;
@@ -14,7 +14,7 @@ class App extends EventEmitter {
 
     this.sceneManager = new SceneManager();
     this.dataVisuManager = new DataVisuManager(this.sceneManager);
-    //this.soundManager = new SoundManager();
+    this.soundManager = new SoundManager();
     //this.speechApiManager = new SpeechApiManager();
     this.webcamRtcManager = new WebcamRtcManager();
 
@@ -30,19 +30,24 @@ class App extends EventEmitter {
   }
 
   onSceneManagerLoaded() {
-    // Init dataVisuManager
-    this.dataVisuManager.init();
-
-    // Listen render event
-    this.sceneManager.on('render', this.render.bind(this));
-
     // Listen event and Init SoundManager
-    //this.soundManager.on('soundManagerLoaded', this.onSoundManagerLoaded.bind(this));
-    //this.soundManager.init();
+    this.soundManager.on('soundManagerLoaded', this.onSoundManagerLoaded.bind(this));
+    this.soundManager.init();
   }
 
+  /**
+   * SounsManager loaded
+   * @return {void}
+   */
   onSoundManagerLoaded() {
-    //this.soundManager.playSound('bugs', 0.5);
+    // Play background sound
+    let sound = this.soundManager.playSound('un-momento', 1, 1);
+
+    // Init data visu manager
+    this.dataVisuManager.init(sound);
+
+    // Listen render
+    this.sceneManager.on('render', this.render.bind(this));
   }
 
   render() {
