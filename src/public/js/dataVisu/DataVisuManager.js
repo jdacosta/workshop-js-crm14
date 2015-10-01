@@ -3,6 +3,7 @@ import CircleAnalyser from './class/CircleAnalyser';
 import CirclePlaneAnalyser from './class/CirclePlaneAnalyser';
 import InlineAnalyser from './class/InlineAnalyser';
 import Video from './class/Video';
+import Cube from './class/Cube';
 
 /**
  * DataVisuManager
@@ -27,6 +28,9 @@ class DataVisuManager {
     this.backgroundAnalyserTransparent;
     this.video;
 
+    // Objects
+    this.cube;
+
     // Data (voice, music stream...)
     this.data = {
       voice: [],
@@ -44,6 +48,18 @@ class DataVisuManager {
   init(sound) {
     this.initVideo();
     this.initAnalysers(sound);
+    this.initObjects();
+  }
+
+  initObjects() {
+
+    // Create a cube
+    this.cube = new Cube({
+      radius: 80,
+      positionX: (window.innerWidth - 160),
+      // positionY: -100
+    });
+    this.SceneManager.add(this.cube.getObject());
   }
 
   initVideo() {
@@ -106,9 +122,11 @@ class DataVisuManager {
 
     // Create second graphs
     this.inlineAnalyser = new InlineAnalyser(sound, {
-      width: 500,
+      width: 255,
       height: 100,
       opacity: 0.5,
+      positionX: (window.innerWidth - 270),
+      positionY: (window.innerHeight - 200),
       frame: {
         opacity: 0.5
       }
@@ -119,18 +137,22 @@ class DataVisuManager {
 
   initSmallAnalyser1(sound) {
     this.smallAnalayser1 = new InlineAnalyser(sound, {
-      width: 250,
-      height: 100,
+      width: 255,
+      height: 50,
       opacity: 0.5,
       color: 0xff0000,
       positionX: 550,
       linewidth: 2,
+      division: 20,
+      positionX: (window.innerWidth - 270),
+      positionY: (window.innerHeight - 300),
       frame: {
         color: 0xff0000,
         opacity: 0.5
       },
       grid: {
-        color: 0xff0000
+        color: 0xff0000,
+        opacity: 0.1
       }
     });
 
@@ -146,6 +168,9 @@ class DataVisuManager {
     this.circleParticulte1Analyser.render();
     this.circleParticulte2Analyser.render();
     this.circleParticulte3Analyser.render();
+
+    // Render objects
+    this.cube.render();
 
     // Small analysers
     this.smallAnalayser1.render();

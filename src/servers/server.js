@@ -1,11 +1,18 @@
 var express    = require('express'),
+    https      = require('https'),
     http       = require('http'),
     peer       = require('peer').ExpressPeerServer,
     config     = require('./config/config'),
+    fs 		   = require('fs'),
     connection = require('./manager/connection');
 
+var privateKey  = fs.readFileSync('./config/server.key', 'utf8');
+var certificate = fs.readFileSync('./config/server.crt', 'utf8');
+var credentials = {key: privateKey, cert: certificate};
+
 var app = express(),
-    server = http.createServer(app),
+    // server = http.createServer(app),
+    server = https.createServer(credentials, app),
     port =  parseInt(process.env.PORT, 10) || config.server.port,
     io;
 
@@ -25,5 +32,5 @@ io = require('socket.io')(server);
 connection.init(io);
 
 server.listen(port, function() {
-  console.log('Server started at: http://' + config.server.host + ':' + config.server.port);
+  console.log('Server started at: https://' + config.server.host + ':' + config.server.port);
 });

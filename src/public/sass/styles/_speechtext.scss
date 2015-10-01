@@ -1,22 +1,47 @@
+$margin: 20px;
+$generalOpacity: 0.25;
+$backgroundOpacity: 0.6;
+
 .speechtext {
-  @include absolute(top 40% left 30px);
+  @include absolute(bottom $margin left $margin);
   z-index: 100;
+  width: 400px;
+  background: rgba(#000, $backgroundOpacity);
+  border: 1px solid rgba(#fff, $generalOpacity);
+  padding: $margin;
+  font-family: 'Source Code Pro';
+
+  .nbMessages {
+    position: absolute;
+    top: $margin;
+    right: $margin;
+    color: #fff;
+    text-transform: uppercase;
+  }
+
+  .title {
+    text-transform: uppercase;
+    font-size: 18px;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    padding-bottom: $margin / 2;
+    border-bottom: 1px solid rgba(#fff, $generalOpacity);
+  }
 
   p {
-    font: 3em sans-serif;
-    color: red;
+    font-size: 12px;
+    font-family: 'Source Code Pro';
+    color: rgba(#fff, 0.7);
+    border-bottom: 1px dashed rgba(#fff, $generalOpacity);
+    padding-bottom: 10px;
+    padding-top: 10px;
+    animation: 2s fadein;
+    text-transform: uppercase;
 
     .annecy,
     .grenoble {
       font-weight: bold;
-    }
-
-    .annecy {
-      color: blue;
-    }
-
-    .grenoble {
-      color: green;
     }
   }
 }

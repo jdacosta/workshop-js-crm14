@@ -183,13 +183,13 @@ class Tracking extends EventEmitter  {
    */
   motionDetecting(averageTrack) {
     this.totalAverageTrack.push(averageTrack);
-    if (this.totalAverageTrack.length > 500) {
-      let average = _.sum(this.totalAverageTrack) / 500;
+    if (this.totalAverageTrack.length > 50) {
+      let average = _.sum(this.totalAverageTrack) / 50;
       if (average > 10) {
-        //console.log('motionDetecting', true);
+        console.log('motionDetecting', true);
         this.emit('motionDetecting', true);
       } else {
-        //console.log('motionDetecting', false);
+        console.log('motionDetecting', false);
         this.emit('motionDetecting', false);
       }
       this.totalAverageTrack = [];

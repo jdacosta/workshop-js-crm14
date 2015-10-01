@@ -21,6 +21,7 @@ export default class InlineAnalyser extends SoundAnalyser {
     this.ease = config.ease || 0.5;
     this.opacity = config.opacity || 1;
     this.linewidth = config.linewidth || 1;
+    this.division = config.division || 10;
     this.width = config.width || window.innerWidth
     this.height = config.height || window.innerHeight
     this.positionX = config.positionX || 0;
@@ -206,7 +207,7 @@ export default class InlineAnalyser extends SoundAnalyser {
         moy += this.freqs[i * this.fusion + o];
       }
 
-      moy /= 10;
+      moy /= this.division;
       value = moy;
 
       let x = i * this.espacement;

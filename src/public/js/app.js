@@ -1,7 +1,7 @@
 import Events from 'events';
 import SceneManager from './scene/SceneManager';
 import DataVisuManager from './dataVisu/DataVisuManager';
-//import SpeechApiManager from './speechApi/SpeechApiManager.js';
+import SpeechApiManager from './speechApi/SpeechApiManager.js';
 import SoundManager from './sound/SoundManager';
 import WebcamRtcManager from './webcamRtc/WebcamRtcManager.js';
 import Interface from './interface/Interface.js';
@@ -19,8 +19,9 @@ class App extends EventEmitter {
     this.sceneManager = new SceneManager();
     this.dataVisuManager = new DataVisuManager(this.sceneManager);
     this.soundManager = new SoundManager();
-    //this.speechApiManager = new SpeechApiManager();
+    this.speechApiManager = new SpeechApiManager();
     this.webcamRtcManager = new WebcamRtcManager();
+    this.webcamRtcManager.on('motionDetecting', this.onMotionDetecting.bind(this));
 
     // initialize app
     this.init();
@@ -29,11 +30,15 @@ class App extends EventEmitter {
   init() {
     this.sceneManager.on('sceneManagerLoaded', this.onSceneManagerLoaded.bind(this));
     this.sceneManager.init();
-    //this.speechApiManager.init();
-    //this.webcamRtcManager.init();
+    this.speechApiManager.init();
+  }
+
+  onMotionDetecting(bool) {
+    // this.sceneManager.setGlitch(bool);
   }
 
   onSceneManagerLoaded() {
+    console.log('onSceneManagerLoaded');
     // Listen event and Init SoundManager
     this.soundManager.on('soundManagerLoaded', this.onSoundManagerLoaded.bind(this));
     this.soundManager.init();
@@ -44,9 +49,10 @@ class App extends EventEmitter {
    * @return {void}
    */
   onSoundManagerLoaded() {
+    console.log('onSoundManagerLoaded');
     // Play background sound
-    let sound = this.soundManager.playSound('bugs', 0, 1);
-    let sound2 = this.soundManager.playSound('burning-man', 0, 1);
+    let sound = this.soundManager.playSound('music', 1, 1);
+    let sound2 = this.soundManager.playSound('burning-man', 1, 1);
 
     // Init data visu manager
     this.dataVisuManager.init(sound);

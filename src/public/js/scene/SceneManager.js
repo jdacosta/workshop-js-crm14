@@ -60,11 +60,7 @@ class SceneManager extends EventEmitter {
 		// Create Glitch
 		this.glitchPass = new THREE.GlitchPass();
 		this.glitchPass.renderToScreen = true;
-		this.glitchPass.goWild= true;
-
-		setTimeout(() => {
-			this.glitchPass.goWild= false;
-		}, 1000);
+		this.glitchPass.goWild = false;
 
 		this.composer.addPass(this.glitchPass);
 
@@ -86,6 +82,10 @@ class SceneManager extends EventEmitter {
     this.camera.updateProjectionMatrix();
 
     this.composer.setSize( window.innerWidth, window.innerHeight );
+  }
+
+  setGlitch(bool) {
+    this.glitchPass.goWild = !bool;
   }
 
 	/**
