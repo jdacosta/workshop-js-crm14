@@ -14,11 +14,13 @@ export default class Cube {
 		this.widthSegments = config.widthSegments || 16;
 		this.heightSegments = config.heightSegments || 16
 
-		this.geometry = new THREE.SphereGeometry(radius, this.widthSegments, this.heightSegments);
-		this.material = new THREE.MeshBasicMaterial({
+		// this.geometry = new THREE.SphereGeometry(radius, this.widthSegments, this.heightSegments);
+		this.geometry = new THREE.TorusKnotGeometry(140, 100, 100, 16);
+		this.material = new THREE.MeshLambertMaterial({
 			color: 0xffaa00,
 			transparent: true,
-			wireframe: true
+			wireframe: true,
+			wireframeLinewidth: 1
 		});
 
 		// Create a cube
@@ -27,6 +29,7 @@ export default class Cube {
 		// Cube positions
 		this.cube.position.x = config.positionX || 0;
 		this.cube.position.y = config.positionY || 0;
+		this.cube.position.z = 500;
 
 		// Group position
 		this.group.position.x = -window.innerWidth / 2;
