@@ -2,7 +2,7 @@ import THREE from 'three';
 
 export default class Video {
   constructor() {
-    this.video = document.getElementById('webcam-video-local');
+    this.video = document.getElementById('webcam-video-remote');
 
     this.xsize = window.innerWidth;
 		this.ysize = window.innerHeight;

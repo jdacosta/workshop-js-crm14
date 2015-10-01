@@ -1,0 +1,120 @@
+/**
+ * Variables
+ */
+
+// General
+$margin: 20px;
+$generalOpacity: 0.5;
+
+// Top section
+$topSectionHeight: 40px;
+$circleRadius: 20px;
+
+/**
+ * Interface
+ */
+#interface {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	
+	#rightSide {
+		position: absolute;
+		padding: $margin;
+		right: $margin;
+		top: $margin;
+		bottom: $margin;
+		width: 250px;
+		border: 1px solid rgba(255, 255, 255, $generalOpacity);
+	}
+
+	.line {
+		width: 100%;
+		height: 1px;
+		width: 100%;
+		background: rgba(#fff, $generalOpacity);
+	}
+
+	.topSection {
+		position: relative;
+		width: 100%;
+		height: $topSectionHeight;
+	}
+
+	.barsTop {
+		position: absolute;
+		top: 0;
+		right: 0;
+		height: 20px;
+		width: 100px;
+	}
+
+	.bar {
+		width: 100%;
+		height: 1px;
+		background: rgba(#fff, ($generalOpacity / 2));
+		position: absolute;
+	}
+
+	.bar1 {
+		animation: 1s barAnimation infinite;
+	}	
+
+	.bar2 {
+		animation: 0.5s barAnimation infinite;
+	}
+
+	.bar3 {
+		animation: 0.25s barAnimation infinite;
+	}
+
+	.circlesTop {
+		left: 0;
+		height: $circleRadius;
+		margin-bottom: $margin;
+	}
+
+	.circle {
+		position: absolute;
+		width: $circleRadius;
+		height: $circleRadius;
+		border-radius: 50%;
+		display: block;
+		border: 1px solid rgba(255, 255, 255, $generalOpacity);
+		
+		&.infiniteRotation {
+			animation: 2s rotation infinite;
+		}
+
+		&.dashed {
+			border-style: dashed;
+		}
+
+		&.circle1 {
+			left: 0;
+		}
+
+		&.circle2 {
+			left: $circleRadius + ($margin / 2);
+			animation-duration: 1s;
+		}
+
+		&.circle3 {
+			left: $circleRadius * 2 + ((2 * $margin) / 2);
+			animation-duration: 1.4s;
+		}
+
+		&.circle4 {
+			left: $circleRadius * 3 + ((3 * $margin) / 2);
+			animation-duration: 400ms;
+		}
+
+		&.circle5 {
+			left: $circleRadius * 4 + ((4 * $margin) / 2);
+			animation-duration: 400ms;
+		}
+	}
+
+}

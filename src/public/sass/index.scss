@@ -21,6 +21,7 @@
 @import "keyframes/fadein";
 @import "keyframes/fadeout";
 @import "keyframes/rotation";
+@import "keyframes/barAnimation";
 
 // base
 @import "base/reset";
@@ -28,5 +29,6 @@
 
 // styles
 @import "styles/frame";
+@import "styles/interface";
 @import "styles/speechtext";
 @import "styles/video";
