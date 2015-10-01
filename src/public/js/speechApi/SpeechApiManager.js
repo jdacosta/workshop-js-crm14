@@ -40,43 +40,43 @@ class SpeechApiManager {
     let _this = this;
     this.recognizer
       .on('start', () => {
-        console.log('end');
+        // console.log('end');
       })
       .on('end', () => {
-        console.log('end');
+        // console.log('end');
       })
       .on('stop', () => {
-        console.log('stop');
+        // console.log('stop');
       })
       .on('error', function(event) {
         console.log(event.error);
       })
       .on('interimResult', (msg) => {
-        console.log('interimResult', msg);
+        // console.log('interimResult', msg);
         // clearTimeout(this.timeout);
         this.replaceMessage(msg);
         this.inProgress = true;
       })
       .on('result', () => {
-        console.log('result');
+        // console.log('result');
       })
       .on('finalResult', (msg) => {
         // this.replaceMessage(msg);
         this.stopProgress();
-        console.log(_this.messages);
+        // console.log(_this.messages);
       })
       .start();
   }
 
   stopProgress() {
-    console.log('stopProgress');
+    // console.log('stopProgress');
     this.inProgress = false;
   }
 
   createTimeout() {
-    console.log('createTimeout');
+    // console.log('createTimeout');
     this.timeout = setTimeout(() => {
-      console.log('end Timeout');
+      // console.log('end Timeout');
       this.stopProgress();
     }, 2000);
   }
