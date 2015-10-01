@@ -59,13 +59,13 @@ class DataVisuManager {
       positionX: (window.innerWidth - 160),
       positionY: -100
     });
-    this.SceneManager.add(this.cube.getObject());
+    this.SceneManager.addVideoScene(this.cube.getObject());
   }
 
   initVideo() {
     // Video
     this.video = new Video();
-    this.SceneManager.add(this.video.getObject());
+    this.SceneManager.addVideoScene(this.video.getObject());
   }
 
   initAnalysers(sound) {
