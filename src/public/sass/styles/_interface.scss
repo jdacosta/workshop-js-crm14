@@ -10,6 +10,11 @@ $generalOpacity: 0.5;
 $topSectionHeight: 40px;
 $circleRadius: 20px;
 
+// Colors
+$yellow: #F9FF57;
+$red: #FF5757;
+$blue: #57C7FF;
+
 /**
  * Interface
  */
@@ -27,94 +32,165 @@ $circleRadius: 20px;
 		top: $margin;
 		bottom: $margin;
 		width: 250px;
-		border: 1px solid rgba(255, 255, 255, $generalOpacity);
-	}
+		// border: 1px solid rgba(255, 255, 255, $generalOpacity);
+		// @include box-shadow();
 
-	.line {
-		width: 100%;
-		height: 1px;
-		width: 100%;
-		background: rgba(#fff, $generalOpacity);
-	}
+		.border {
+			position: absolute;
+			@include box-shadow();
+			background: rgba(255, 255, 255, $generalOpacity);
 
-	.topSection {
-		position: relative;
-		width: 100%;
-		height: $topSectionHeight;
-	}
+			&.border-top {
+				top: 0;
+			}
 
-	.barsTop {
-		position: absolute;
-		top: 0;
-		right: 0;
-		height: 20px;
-		width: 100px;
-	}
+			&.border-bottom {
+				bottom: 0;
+			}
 
-	.bar {
-		width: 100%;
-		height: 1px;
-		background: rgba(#fff, ($generalOpacity / 2));
-		position: absolute;
-	}
+			&.border-left {
+				left: 0;
+			}
 
-	.bar1 {
-		animation: 1s barAnimation infinite;
-	}	
+			&.border-right {
+				right: 0;
+			}
 
-	.bar2 {
-		animation: 0.5s barAnimation infinite;
-	}
+			&.border-top,
+			&.border-bottom {
+				width: 100%;
+				height: 1px;
+				left: 0;
+			}
 
-	.bar3 {
-		animation: 0.25s barAnimation infinite;
-	}
-
-	.circlesTop {
-		left: 0;
-		height: $circleRadius;
-		margin-bottom: $margin;
-	}
-
-	.circle {
-		position: absolute;
-		width: $circleRadius;
-		height: $circleRadius;
-		border-radius: 50%;
-		display: block;
-		border: 1px solid rgba(255, 255, 255, $generalOpacity);
-		
-		&.infiniteRotation {
-			animation: 2s rotation infinite;
+			&.border-left,
+			&.border-right {
+				height: 100%;
+				width: 1px;
+				top: 0;
+			}
 		}
 
-		&.dashed {
-			border-style: dashed;
+		.title1 {
+			text-transform: uppercase;
+			position:absolute;
+			top: 200px;
+			left: $margin;
+			color: $red;
+			font-size: 12px;
+			@include text-shadow();
+			font-family: 'Source Code Pro';
+			@include font-smoothing();
 		}
 
-		&.circle1 {
+		.line {
+			width: 100%;
+			height: 1px;
+			width: 100%;
+			background: rgba(#fff, $generalOpacity);
+			@include box-shadow();
+		}
+
+		.topSection {
+			position: relative;
+			width: 100%;
+			height: $topSectionHeight;
+		}
+
+		.barsTop {
+			position: absolute;
+			top: 0;
+			right: 0;
+			height: 20px;
+			width: 100px;
+			border: 1px solid rgba(#fff, 0.3);
+			@include box-shadow();
+		}
+
+		.bar {
+			width: 100%;
+			height: 1px;
+			background: rgba(#fff, ($generalOpacity / 2));
+			position: absolute;
+			@include box-shadow();
+		}
+
+		.bar1 {
+			animation: 1s barAnimation infinite;
+			animation-direction: alternate;
+			animation-timing-function: ease-in;
+			animation-fill-mode: forwards;
+		}
+
+		.bar2 {
+			animation: 0.8s barAnimation infinite;
+			background: rgba($red, 0.5);
+			animation-direction: alternate;
+			animation-timing-function: ease-in;
+			animation-fill-mode: forwards;
+		}
+
+		.bar3 {
+			animation: 0.25s barAnimation infinite;
+			background: rgba($yellow, 0.2);
+			animation-direction: alternate;
+		}
+
+		.circlesTop {
 			left: 0;
+			height: $circleRadius;
+			margin-bottom: $margin;
 		}
 
-		&.circle2 {
-			left: $circleRadius + ($margin / 2);
-			animation-duration: 1s;
-		}
+		.circle {
+			position: absolute;
+			width: $circleRadius;
+			height: $circleRadius;
+			border-radius: 50%;
+			display: block;
+			border: 1px solid rgba(255, 255, 255, $generalOpacity);
+			
+			&.infiniteRotation {
+				animation: 2s rotation infinite;
+			}
 
-		&.circle3 {
-			left: $circleRadius * 2 + ((2 * $margin) / 2);
-			animation-duration: 1.4s;
-		}
+			&.dashed {
+				border-style: dashed;
+			}
 
-		&.circle4 {
-			left: $circleRadius * 3 + ((3 * $margin) / 2);
-			animation-duration: 400ms;
-		}
+			&.circle1 {
+				left: 0;
+			}
 
-		&.circle5 {
-			left: $circleRadius * 4 + ((4 * $margin) / 2);
-			animation-duration: 400ms;
+			&.circle2 {
+				left: $circleRadius + ($margin / 2);
+				border-color: $red;
+				animation-duration: 1s;
+
+				&:before {
+					@include simple-circle($circleRadius, $red);
+				}
+			}
+
+			&.circle3 {
+				left: $circleRadius * 2 + ((2 * $margin) / 2);
+				animation-duration: 1.4s;
+			}
+
+			&.circle4 {
+				left: $circleRadius * 3 + ((3 * $margin) / 2);
+				animation-duration: 400ms;
+				border-color: $yellow;
+
+				&:before {
+					@include simple-circle($circleRadius, $yellow);
+				}
+			}
+
+			&.circle5 {
+				left: $circleRadius * 4 + ((4 * $margin) / 2);
+				animation-duration: 400ms;
+			}
 		}
 	}
-
 }

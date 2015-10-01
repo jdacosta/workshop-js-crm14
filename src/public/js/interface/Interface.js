@@ -1,8 +1,30 @@
-
+import $ from 'jquery';
 
 export default class Interface {
   constructor() {
     this.initFrameAnimation();
+    this.initMessagerie();
+  }
+
+  initMessagerie() {
+    let message = $('#textSpeech');
+    let nbMessage = $('.nbMessages', message);
+    let l = 0;
+
+    $(message).on('DOMNodeInserted', () => {
+      let newl = message.find('p').length;
+
+      if(newl != l) {
+        l = newl;
+
+        if(l > 1) {
+          nbMessage.text(l + ' Messages');
+        } else {
+          nbMessage.text(l + ' Message');
+        }
+      }
+
+    });
   }
 
   initFrameAnimation() {

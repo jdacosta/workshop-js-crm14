@@ -16,6 +16,9 @@ class SoundManager extends EventEmitter {
 		}, {
 			path: '../assets/sounds/burning-man.wav',
 			name: 'burning-man'
+		}, {
+			path: '../assets/sounds/music.mp3',
+			name: 'music'
 		}];
 
 		this.count = 0;
@@ -38,9 +41,11 @@ class SoundManager extends EventEmitter {
 	loadHandler(event) {
 		this.count++;
 
+		console.log('sound loaded');
 		this.emit('soundLoaded');
 
 		if(this.count == this.sounds.length) {
+			console.log('soundManagerLoaded');
 			this.emit('soundManagerLoaded')
 		}
 	}

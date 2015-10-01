@@ -174,3 +174,11 @@ src/public/sounds/Bugs.wav
 src/public/data/sintel.mp4
 
 src/public/data/sintel.mp4
+
+src/servers/config/server.crt
+
+src/servers/config/server.csr
+
+src/servers/config/server.key
+
+src/public/sounds/music.mp3

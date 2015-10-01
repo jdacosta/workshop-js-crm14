@@ -43,7 +43,6 @@ export default class CircleAnalyser extends SoundAnalyser {
     this.geometry.colors = colors;
 
     let materialConfig = {
-      opacity: 0.7,
       linewidth: this.linewidth,
       vertexColors: THREE.VertexColors,
       transparent: true,
