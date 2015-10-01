@@ -16,6 +16,9 @@ class Tracking extends EventEmitter  {
     // init
     this.lastImageData = null;
     this.totalAverageTrack = [];
+    this.totalAverageRight = [];
+    this.totalAverageCenter = [];
+    this.totalAverageLeft = [];
 
     // init requestAnimFrame
     window.requestAnimFrame = window.requestAnimationFrame       ||
@@ -167,7 +170,13 @@ class Tracking extends EventEmitter  {
       // calculate an average between of the color values of the define area
       averageArea = Math.round(averageArea / (blendedData.data.length * 0.25));
       if (averageArea > 10) {
+        // total average
         averageTrack += averageArea;
+
+        // area average
+        if (r === 6 || r === 7) this.totalAverageRight += averageArea;
+        else if (r === 3 || r === 4) this.totalAverageCenter += averageArea;
+        else if (r === 0 || r === 1) this.totalAverageLeft += averageArea;
       }
     }
 
@@ -184,15 +193,42 @@ class Tracking extends EventEmitter  {
   motionDetecting(averageTrack) {
     this.totalAverageTrack.push(averageTrack);
     if (this.totalAverageTrack.length > 50) {
-      let average = _.sum(this.totalAverageTrack) / 50;
+      let average = _.sum(this.totalAverageTrack) / this.totalAverageTrack.length;
       if (average > 10) {
-        console.log('motionDetecting', true);
-        this.emit('motionDetecting', true);
+
+        // get speed
+        let speed;
+        if (average > 150) speed = 'VERY_FAST';
+        else if (average > 100) speed = 'FAST';
+        else if (average > 70) speed = 'NORMAL';
+        else if (average > 30) speed = 'SLOW';
+        else speed = 'VERY_SLOW';
+
+        // get zone area
+        let area;
+        let right = _.sum(this.totalAverageRight);
+        let center = _.sum(this.totalAverageCenter);
+        let left = _.sum(this.totalAverageLeft);
+        if (Math.abs(right) < Math.abs(left) && Math.abs(center) < Math.abs(left)) {
+          area = 'LEFT';
+        } else if (Math.abs(right) < Math.abs(center) && Math.abs(left) < Math.abs(center)) {
+          area = 'CENTER';
+        } else {
+          area = 'RIGHT';
+        }
+
+        //console.log('motionDetecting', true, average, {speed: speed, area: area});
+        this.emit('motionDetecting', true, average, {speed: speed, area: area});
       } else {
-        console.log('motionDetecting', false);
-        this.emit('motionDetecting', false);
+        //console.log('motionDetecting', false);
+        this.emit('motionDetecting', false, {});
       }
+
+      // init
       this.totalAverageTrack = [];
+      this.totalAverageRight = [];
+      this.totalAverageCenter = [];
+      this.totalAverageLeft = [];
     }
   }
 }
