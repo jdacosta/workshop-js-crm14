@@ -57,7 +57,7 @@ class DataVisuManager {
     this.cube = new Cube({
       radius: 80,
       positionX: (window.innerWidth - 160),
-      // positionY: -100
+      positionY: -100
     });
     this.SceneManager.add(this.cube.getObject());
   }

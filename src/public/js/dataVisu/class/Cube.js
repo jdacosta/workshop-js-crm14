@@ -15,11 +15,11 @@ export default class Cube {
 		this.heightSegments = config.heightSegments || 16
 
 		// this.geometry = new THREE.SphereGeometry(radius, this.widthSegments, this.heightSegments);
-		this.geometry = new THREE.TorusKnotGeometry(140, 100, 100, 16);
+		this.geometry = new THREE.BoxGeometry(radius, radius, radius);
 		this.material = new THREE.MeshLambertMaterial({
 			color: 0xffaa00,
 			transparent: true,
-			wireframe: true,
+			wireframe: false,
 			wireframeLinewidth: 1
 		});
 
@@ -29,10 +29,10 @@ export default class Cube {
 		// Cube positions
 		this.cube.position.x = config.positionX || 0;
 		this.cube.position.y = config.positionY || 0;
-		this.cube.position.z = 500;
+		this.cube.position.z = 100;
 
 		// Group position
-		this.group.position.x = -window.innerWidth / 2;
+		this.group.position.x = -window.innerWidth / 2 - 60;
 		// this.group.position.y = -window.innerHeight / 2 + 200;
 
 		this.group.add(this.cube);
