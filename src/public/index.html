@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Workshop JS • CRM14</title>
     <link rel="stylesheet" href="assets/css/index.css">
+    <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,300' rel='stylesheet' type='text/css'>
 </head>
 <body>
 
@@ -14,11 +15,13 @@
       <div class="bottom"></div>
       <div class="left"></div>
     </div>
-  </div>
 
-  <div id="interface">
     <div id="rightSide">
-
+      <div class="border border-top"></div>
+      <div class="border border-right"></div>
+      <div class="border border-bottom"></div>
+      <div class="border border-left"></div>
+    
       <div class="topSection">
         <div class="circlesTop">
           <div class="circle infiniteRotation dashed circle1"></div>
@@ -35,12 +38,19 @@
         </div>
       </div>
 
-      <div class="line"></div>
+      <div class="line"></div>  
+    
+      <h2 class="title1">Analysers - experiments</h2>
 
     </div>
   </div>
 
-  <section id="textSpeech" class="speechtext"></section>
+  <section id="textSpeech" class="speechtext">
+    <h2 class="title">
+      Conversation
+    </h2>
+    <div class="nbMessages"></div>
+  </section>
 
   <video id="webcam-video-local" class="local is-visible" autoplay width="200" height="150"></video>
   <video id="webcam-video-remote" class="remote bg-video is-hidden" autoplay width="800" height="600"></video>

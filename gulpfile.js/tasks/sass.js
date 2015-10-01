@@ -10,9 +10,10 @@ var handleErrors = require('../lib/handleErrors');
 gulp.task('sass', function () {
     return gulp.src(config.src)
         .pipe(sass(config.settings))
+        .on('error', handleErrors)
         .pipe(autoprefixer(config.autoprefixer))
         .pipe(sourcemaps.init())
-        .pipe(minify())
+        // .pipe(minify())
         .on('error', handleErrors)
         .pipe(sourcemaps.write(maps.dest))
         .pipe(gulp.dest(config.dest));
