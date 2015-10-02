@@ -6,63 +6,98 @@ export default class Interface {
     this.initMessagerie();
     this.initTitleAnimation();
     this.initGridAnimation();
+    this.initWarningMessage();
+  }
+
+  initWarningMessage() {
+    let messageContainer = $('#warningMessage');
+    let img = $('#icon', messageContainer);
+    let tl = new TimelineMax({
+      repeat: -1,
+      yoyo: true
+    })
+
+    tl.add(TweenLite.to(img, 1, {
+      scale: 1.2
+    }));
+
+  }
+
+  setWarningMessage(bool) {
+    let messageContainer = $('#warningMessage');
+    let speed = 0.65;
+
+    if(!bool) {
+      messageContainer.show();
+      TweenLite.to(messageContainer, speed, {
+        opacity: 1,
+        scale: 1,
+        ease: Back.easeOut
+      });
+    } else {
+      TweenLite.to(messageContainer, speed, {
+        opacity: 0,
+        scale: 0.8,
+        ease: Back.easeOut
+      });
+    }
   }
 
   initGridAnimation() {
-    var gridContainer = $('#grid');
-      var vLines = $('.vLine', gridContainer);
-      var hLines = $('.hLine', gridContainer);
-      var i = 0;
+    let gridContainer = $('#grid');
+    let vLines = $('.vLine', gridContainer);
+    let hLines = $('.hLine', gridContainer);
+    let i = 0;
 
-      // Pour chaque lignes verticales
-      $(vLines).each(function() {
-        $(this).show();
-        tweeningVLine($(this), random(5, 10));
-        i++;
+    // Pour chaque lignes verticales
+    $(vLines).each(function() {
+      $(this).show();
+      tweeningVLine($(this), random(5, 10));
+      i++;
+    });
+
+    // Pour chaque lignes horizontales
+    $(hLines).each(function() {
+      $(this).show();
+      tweeningHLine($(this), random(3, 8));
+      i++;
+    });
+
+    function tweeningVLine(el, time) {
+      resetTween(el);
+      
+      TweenMax.to(el, time, {
+        left: '100%',
+        onComplete: function() {
+          var t = random(5, 10);
+          tweeningVLine(el, t);
+        }
       });
+    }
 
-      // Pour chaque lignes horizontales
-      $(hLines).each(function() {
-        $(this).show();
-        tweeningHLine($(this), random(3, 8));
-        i++;
+    function tweeningHLine(el, time) {
+      resetTween(el);
+
+      TweenMax.to(el, time, {
+        top: '100%',
+        onComplete: function() {
+          var t = random(3, 8);
+          tweeningHLine(el, t);
+        }
       });
+    }
 
-      function tweeningVLine(el, time) {
-        resetTween(el);
-        
-        TweenMax.to(el, time, {
-          left: '100%',
-          onComplete: function() {
-            var t = random(5, 10);
-            tweeningVLine(el, t);
-          }
-        });
-      }
+    function resetTween(el) {
+      TweenMax.set(el, {
+        left: 0,
+        top: 0,
+        opacity: random(0.5, 1)
+      });
+    }
 
-      function tweeningHLine(el, time) {
-        resetTween(el);
-
-        TweenMax.to(el, time, {
-          top: '100%',
-          onComplete: function() {
-            var t = random(3, 8);
-            tweeningHLine(el, t);
-          }
-        });
-      }
-
-      function resetTween(el) {
-        TweenMax.set(el, {
-          left: 0,
-          top: 0,
-          opacity: random(0.5, 1)
-        });
-      }
-
-      function random(min, max) {
-        return Math.floor(Math.random() * max) + min;
-      }
+    function random(min, max) {
+      return Math.floor(Math.random() * max) + min;
+    }
   }
 
   initTitleAnimation() {
