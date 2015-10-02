@@ -71,7 +71,13 @@ class DataVisuManager {
 
     let loader = new THREE.JSONLoader();
     loader.load('assets/data/3dObjects/frenchtech.json', (object) => {
+      
+      console.log('________________________________________');
+      console.log('________________________________________');
       console.log('______ cocq cocq coquedetteeeee ! ______');
+      console.log('________________________________________');
+      console.log('________________________________________');
+
       let mesh2 = new THREE.Mesh(object, material);
       this.frenchTech = mesh2;
       this.frenchTech.material = material;
