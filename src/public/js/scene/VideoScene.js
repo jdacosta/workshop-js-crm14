@@ -1,16 +1,24 @@
 import THREE from 'three';
+import ShaderExtras from '../../data/shaders/ShaderExtras.js';
+import EffectComposer from '../../data/postprocessing/EffectComposer.js';
 import RenderPass from '../../data/postprocessing/RenderPass.js';
+import BloomPass from '../../data/postprocessing/BloomPass.js';
+import ShaderPass from '../../data/postprocessing/ShaderPass.js';
+import MaskPass from '../../data/postprocessing/MaskPass.js';
+import SavePass from '../../data/postprocessing/SavePass.js';
 
-export default class Scene {
+const SCREEN_WIDTH = window.innerWidth;
+const SCREEN_HEIGHT = window.innerHeight;
+
+export default class VideoScene {
   constructor(camera, renderer) {
     // Scene
     this.scene = new THREE.Scene();
-    this.renderer = renderer;
-    // this.camera = camera;
-    this.camera = new THREE.PerspectiveCamera(58, window.innerWidth / window.innerHeight, 1, 10000);
-		this.camera.aspect = window.innerWidth / window.innerHeight;
+
+    // Camera
+    this.camera = new THREE.PerspectiveCamera(58, SCREEN_WIDTH / SCREEN_HEIGHT, 1, 10000);
+		this.camera.aspect = SCREEN_WIDTH / SCREEN_HEIGHT;
 		this.camera.position.z = 1000;
-		this.camera.updateProjectionMatrix();
 
     // Create lights
     let light = new THREE.PointLight(0xffffff);
@@ -20,16 +28,41 @@ export default class Scene {
     let ambientLight = new THREE.AmbientLight(0xffffff);
     this.scene.add(ambientLight);
 
-    // Create the render
-    this.render = new THREE.RenderPass(this.scene, this.camera);
+    // Video composer
+
+    let renderTargetParameters = { 
+      minFilter: THREE.LinearFilter,
+      magFilter: THREE.LinearFilter,
+      format: THREE.RGBFormat,
+      stencilBufer: false
+    };
+
+    let renderTargetGlow = new THREE.WebGLRenderTarget( SCREEN_WIDTH, SCREEN_HEIGHT, renderTargetParameters );
+    this.effectFXAA = new THREE.ShaderPass( THREE.ShaderExtras[ "fxaa" ] );
+    this.effectFXAA.uniforms[ 'resolution' ].value.set( 1 / SCREEN_WIDTH, 1 / SCREEN_HEIGHT );
+
+    let hblur = new THREE.ShaderPass( THREE.ShaderExtras[ "horizontalBlur" ] );
+    let vblur = new THREE.ShaderPass( THREE.ShaderExtras[ "verticalBlur" ] );
+    let bluriness = 3;
+
+    hblur.uniforms[ 'h' ].value = bluriness / SCREEN_WIDTH;
+    vblur.uniforms[ 'v' ].value = bluriness / SCREEN_HEIGHT;
+
+    let renderModelGlow = new THREE.RenderPass(this.scene, this.camera);
+    this.composer = new THREE.EffectComposer(renderer, renderTargetGlow);
+    this.composer.addPass( renderModelGlow );
+    this.composer.addPass( hblur );
+    this.composer.addPass( vblur );
+    this.composer.addPass( hblur );
+    this.composer.addPass( vblur );
   }
 
-  getRender() {
-    return this.render;
+  getEffect() {
+    return this.effectFXAA;
   }
 
-  getScene() {
-    return this.scene;
+  getComposer() {
+    return this.composer;
   }
 
   add(object) {

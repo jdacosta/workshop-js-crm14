@@ -19,7 +19,7 @@ class App extends EventEmitter {
     this.sceneManager = new SceneManager();
     this.dataVisuManager = new DataVisuManager(this.sceneManager);
     this.soundManager = new SoundManager();
-    this.speechApiManager = new SpeechApiManager();
+    // this.speechApiManager = new SpeechApiManager();
     this.webcamRtcManager = new WebcamRtcManager();
     this.webcamRtcManager.on('motionDetecting', this.onMotionDetecting.bind(this));
 
@@ -30,7 +30,7 @@ class App extends EventEmitter {
   init() {
     this.sceneManager.on('sceneManagerLoaded', this.onSceneManagerLoaded.bind(this));
     this.sceneManager.init();
-    this.speechApiManager.init();
+    // this.speechApiManager.init();
   }
 
   onMotionDetecting(bool) {
