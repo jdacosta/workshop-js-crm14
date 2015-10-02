@@ -59,6 +59,14 @@ class App extends EventEmitter {
     this.dataVisuManager.init(sound);
     this.dataVisuManager.initSmallAnalyser1(sound2);
 
+    // Exemple d'appel pour changer un mot clé
+    setTimeout(() => {
+      this.interface.setWord('Salut !');
+    }, 5000);
+    setTimeout(() => {
+      this.interface.setWord('Lorem ipsum dolor sit amet');
+    }, 10000);
+
     // Listen render
     this.sceneManager.on('render', this.render.bind(this));
   }
