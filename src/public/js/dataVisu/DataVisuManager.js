@@ -4,6 +4,7 @@ import CirclePlaneAnalyser from './class/CirclePlaneAnalyser';
 import InlineAnalyser from './class/InlineAnalyser';
 import Video from './class/Video';
 import Cube from './class/Cube';
+import OBJLoader from '../../data/loader/OBJLoader';
 
 /**
  * DataVisuManager
@@ -30,6 +31,7 @@ class DataVisuManager {
 
     // Objects
     this.cube;
+    this.frenchTech;
 
     // Data (voice, music stream...)
     this.data = {
@@ -52,6 +54,33 @@ class DataVisuManager {
   }
 
   initObjects() {
+    let texture = new THREE.Texture();
+    let imageLoade = new THREE.ImageLoader();
+    imageLoade.load( 'assets/data/UV_Grid_Sm.jpg', (image) => {
+      texture.image = image;
+      texture.needsUpdate = true;
+    });
+
+    let loader = new THREE.OBJLoader();
+    loader.load('assets/data/french-tech.obj', (object) => {
+        console.log('------');
+        console.log('ICI');
+        console.log('------');
+        object.traverse((child) => {
+            if (child instanceof THREE.Mesh) {
+              child.material.map = texture;
+            }
+        });
+        object.scale.set(40, 40, 40);
+        this.SceneManager.add(object);
+    }, (xhr) => {
+        if (xhr.lengthComputable) {
+            let percentComplete = xhr.loaded / xhr.total * 100;
+            console.log(Math.round(percentComplete, 2) + '% downloaded');
+        }
+    }, (xhr) => {
+        console.log('ERROR THREEJS : Loader error ' + xhr);
+    });
 
     // Create a cube
     this.cube = new Cube({
@@ -171,6 +200,9 @@ class DataVisuManager {
 
     // Render objects
     this.cube.render();
+
+    // French tech
+    
 
     // Small analysers
     this.smallAnalayser1.render();
