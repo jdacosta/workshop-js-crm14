@@ -4,7 +4,7 @@ var gulpSequence = require('gulp-sequence');
 gulp.task('build:development', function (callback) {
     gulpSequence(
         'clean',
-        ['icons', 'images', 'sounds', 'fonts', 'data'],
+        ['images', 'sounds', 'data'],
         ['sass', 'browserify', 'html', 'server'],
         ['watch'],
         callback
