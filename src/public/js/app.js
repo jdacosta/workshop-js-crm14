@@ -34,7 +34,7 @@ class App extends EventEmitter {
   }
 
   onMotionDetecting(bool) {
-    this.sceneManager.setGlitch(bool);
+    //this.sceneManager.setGlitch(bool);
   }
 
   onSceneManagerLoaded() {
