@@ -15,6 +15,16 @@ $yellow: #F9FF57;
 $red: #FF5757;
 $blue: #57C7FF;
 
+.shadow {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 50;
+	background: url('../img/shadow.png');
+}
+
 /**
  * Interface
  */
@@ -24,7 +34,29 @@ $blue: #57C7FF;
 	right: 0;
 	bottom: 0;
 	left: 0;
+	z-index: 100;
 	
+	.titlesContainer {
+		position: absolute;
+		z-index: 80;
+		top: $margin;
+		left: 140px;
+		font-size: 80px;
+		line-height: 60px;
+		color: #fff;
+		text-transform: uppercase;
+		font-family: 'Allerta Stencil', sans-serif;
+		font-weight: bold;
+	}
+
+	#subBigTitle {
+		opacity: 0.8;
+		left: $margin;
+		top: 95px;
+		font-size: 40px;
+		font-weight: lighter;
+	}
+
 	#rightSide {
 		position: absolute;
 		padding: $margin;
