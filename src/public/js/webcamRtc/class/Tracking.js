@@ -229,10 +229,10 @@ class Tracking extends EventEmitter  {
         else if (average > 20) speed = 'SLOW';
         else speed = 'VERY_SLOW';
 
-        console.log('motionDetecting', true, average, {'speed': speed, 'position': position});
+        //console.log('motionDetecting', true, average, {'speed': speed, 'position': position});
         this.emit('motionDetecting', true, average, {'speed': speed, 'position': position});
       } else {
-        console.log('motionDetecting', false);
+        //console.log('motionDetecting', false);
         this.emit('motionDetecting', false, {});
       }
 
@@ -267,10 +267,12 @@ class Tracking extends EventEmitter  {
     let first = _.first(this.lastPosition);
     if (this.lastPosition.length === 3 && (time - first['time'])) {
       if (first['position'] === 'LEFT' && last['position'] === 'CENTER' && position === 'RIGHT') {
-        console.log('DEPLACEMENT LEFT --> RIGHT');
+        //console.log('DEPLACEMENT LEFT --> RIGHT');
+        this.emit('movePosition', 'LEFT_TO_RIGHT');
       }
       if (first['position'] === 'RIGHT' && last['position'] === 'CENTER' && position === 'LEFT') {
-        console.log('DEPLACEMENT RIGHT --> LEFT');
+        //console.log('DEPLACEMENT RIGHT --> LEFT');
+        this.emit('movePosition', 'RIGHT_TO_LEFT');
       }
     }
   }

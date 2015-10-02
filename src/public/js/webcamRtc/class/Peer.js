@@ -88,14 +88,6 @@ class Peer extends EventEmitter {
         this.askCall(users[i]);
       }
     }
-
-    // display list
-    /*$('#users').empty();
-    for(let i = 0; i < users.length; i++) {
-      if(users[i] != this.userId) {
-        $('#users').append('<li><a data-user="' + users[i] + '">Call ' + users[i] + '</a></li>');
-      }
-    }*/
   }
 
   /**
@@ -163,13 +155,6 @@ class Peer extends EventEmitter {
 
     // get our video
     this.webcam.on('webcamInit', this.sendCall.bind(this));
-    //console.log('DEBUG2');
-    //console.log(this.webcam.getWebcamStream());
-    //this.sendCall(this.webcam.getWebcamStream());
-    /*navigator.getUserMedia({ audio: false, video: true },
-      this.sendCall.bind(this),
-      this.gotError.bind(this)
-    );*/
   }
 
   /**
@@ -178,7 +163,6 @@ class Peer extends EventEmitter {
    * @param  {object} stream  url du stream video.
    * @return {void}
    */
-  //sendCall(stream) {
   sendCall() {
 
     // display info
@@ -213,10 +197,6 @@ class Peer extends EventEmitter {
 
     // get our micro stream
     this.answerCall(this.webcam.getWebcamStream());
-    /*navigator.getUserMedia({ audio: false, video: true },
-      this.answerCall.bind(this),
-      this.gotError.bind(this)
-    );*/
   }
 
   /**
