@@ -7,6 +7,63 @@ export default class Interface {
     this.initTitleAnimation();
     this.initGridAnimation();
     this.initWarningMessage();
+
+    // Variables pour l'ajout de mots clés
+    this.timeout;
+    this.wordContainer = $('#wordContainer');
+    this.wordBlock = $('.word', wordContainer);
+    this.wordSpeed = 0.2;
+  }
+
+  /**
+   * Quand on ajoute un mot clé
+   * Celui-ci remplace le précédent et s'autodétruit 
+   * après 10s
+   * @param {void}
+   */
+  setWord(newWord) {
+    // On clear le timer si il existe
+    if(this.timeout) {
+      clearTimeout(this.timeout);
+    }
+
+    // Si le mot existe on clear et on l'ajoute
+    if(newWord) {
+      this.clearWord(() => {
+        this.addWord(newWord);
+      });
+    }
+
+    // On initialise un timer qui clear après 10s
+    this.timeout = setTimeout(() => {
+      this.clearWord();
+    }, 10000);
+  }
+
+  addWord(newWord) {
+    this.wordBlock.text(newWord);
+    TweenMax.to(this.wordBlock, this.wordSpeed, {
+      opacity: 1,
+      ease: Back.easeOut,
+      left: 0,
+      scale: 1
+    });
+  }
+
+  clearWord(callback) {
+    TweenMax.to(this.wordBlock, this.wordSpeed, {
+      opacity: 0,
+      ease: Back.easeOut,
+      left: -100,
+      scale: 0.5,
+      onComplete: () => {
+        this.wordBlock.empty();
+
+        if(callback) {
+          callback();
+        }
+      }
+    });
   }
 
   initWarningMessage() {
