@@ -4,8 +4,64 @@ export default class Interface {
   constructor() {
     this.initFrameAnimation();
     this.initMessagerie();
+    this.initTitleAnimation();
   }
 
+  initTitleAnimation() {
+     var tl = new TimelineMax({
+      repeat: -1,
+      // repeatDelay: 1,
+      yoyo: true,
+      onComplete: () => {
+        console.log('onComplete');
+        tl.pause();
+      }
+    });
+
+    // tl.play();
+
+    var mySplitText1 = new SplitText("#bigTitle", {
+      type: 'words,chars'
+    });
+    var mySplitText2 = new SplitText("#subBigTitle", {
+      type: 'words,chars'
+    });
+
+    // An array of all the divs that wrap each character
+    var chars = mySplitText1.chars; 
+    var chars2 = mySplitText2.chars; 
+
+    TweenLite.set("#bigTitle", {
+      perspective:400
+    });
+
+    TweenLite.set("#subBigTitle", {
+      perspective:400
+    });
+
+    tl.add(TweenMax.staggerFrom(chars, 0.8, {
+      opacity:0,
+      scale:0,
+      y:80,
+      rotationX: 180,
+      transformOrigin: '0% 50% -50',
+      ease:Back.easeOut
+    }, 0.024, '+=0'));
+
+    tl.add(TweenMax.staggerFrom(chars2, 0.8, {
+      opacity:0,
+      scale:0,
+      y:80,
+      rotationX: 180,
+      transformOrigin: '0% 50% -50',
+      ease:Back.easeOut
+    }, 0.024, '+=0'), '-=0.5').addPause(5, function() {
+      tl.reverse().addPause(2, function() {
+        tl.play();
+      });
+    });
+  }
+ 
   initMessagerie() {
     let message = $('#textSpeech');
     let nbMessage = $('.nbMessages', message);

@@ -54,76 +54,35 @@ class DataVisuManager {
     this.initObjects();
   }
 
-  createMesh(originalGeometry, scale, x, y, z) {
-      var i,
-          vertices = originalGeometry.vertices,
-          origin = _.random(0, vertices.length);
-
-      this.geometry = new THREE.Geometry();
-      for (i = 0; i < vertices.length; i ++) {
-          var p = vertices[i];
-          this.distance[i] = {index: i, distance: vertices[origin].distanceTo(vertices[i])};
-          this.geometry.vertices[i] = p.clone();
-      }
-      this.length = this.geometry.vertices.length;
-      this.distance = _.sortBy(this.distance, 'distance');
-
-
-      var colors = [];
-      for(i = 0; i < this.length; i++) {
-          colors[this.distance[i].index] = new THREE.Color(0xA3A2BC);
-      }
-      this.geometry.colors = colors;
-
-      this.mesh = new THREE.PointCloud(this.geometry, new THREE.PointCloudMaterial({ size: 22, blending: THREE.AdditiveBlending, vertexColors: THREE.VertexColors }));
-      this.mesh.scale.x = this.mesh.scale.y = this.mesh.scale.z = scale;
-      this.mesh.position.x = x;
-      this.mesh.position.y = y;
-      this.mesh.position.z = z;
-      this.parent.add(this.mesh);
-  }
-
   initObjects() {
     let manager = new THREE.LoadingManager();
     manager.onProgress = ( item, loaded, total ) => {
       console.log( item, loaded, total );
     };
 
-    // this.texture = new THREE.Texture();
-    // let imageLoader = new THREE.ImageLoader(manager);
-    // imageLoader.load( 'assets/data/textures/UV_Grid_Sm.jpg', (image) => {
-    //   this.texture.image = image;
-    //   this.texture.needsUpdate = true;
-    // });
-
     this.parent = new THREE.Object3D();
 
     let material = new THREE.MeshLambertMaterial({
-      // color: 0x2194CE,
-      // transparent: true,
-      // opacity: 0.5,
-      map: THREE.ImageUtils.loadTexture( "assets/data/textures/UV_Grid_Sm.jpg" )
+      color: 0xbe0d41,
+      // // transparent: true,
+      // // opacity: 0.5,
     });
-
-    let cube2 = new THREE.BoxGeometry(80, 80, 80);
-    let mesh = new THREE.Mesh(cube2, material);
-
-    this.SceneManager.add(mesh);
+    let groupCocq = new THREE.Object3D();
 
     let loader = new THREE.JSONLoader();
     loader.load('assets/data/3dObjects/frenchtech.json', (object) => {
-      console.log('______ ici ______');
+      console.log('______ cocq cocq coquedetteeeee ! ______');
       let mesh2 = new THREE.Mesh(object, material);
       this.frenchTech = mesh2;
-      // this.frenchTech.traverse((child) => {
-      //     if (child instanceof THREE.Mesh) {
-      //       this.createMesh(child.geometry, 20, 0, 0, 0);
-      //     }
-      // });
-      // this.frenchTech.material = material;
-      this.frenchTech.scale.set(40, 40, 40);
+      this.frenchTech.material = material;
+      this.frenchTech.scale.set(20, 20, 20);
       this.frenchTech.position.z = 100;
-      this.SceneManager.add(this.frenchTech);
+      groupCocq.add(this.frenchTech);
+
+      groupCocq.position.x = -window.innerWidth / 2 + 100;
+      groupCocq.position.y = window.innerHeight / 2 - 100;
+
+      this.SceneManager.add(groupCocq);
     }, (xhr) => {
         if (xhr.lengthComputable) {
             let percentComplete = xhr.loaded / xhr.total * 100;
