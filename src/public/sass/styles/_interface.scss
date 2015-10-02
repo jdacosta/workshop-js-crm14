@@ -12,7 +12,7 @@ $circleRadius: 20px;
 
 // Colors
 $yellow: #F9FF57;
-$red: #FF5757;
+$red: #be0d41;
 $blue: #57C7FF;
 
 .shadow {
@@ -35,12 +35,12 @@ $blue: #57C7FF;
 	bottom: 0;
 	left: 0;
 	z-index: 100;
-	
+
 	.titlesContainer {
 		position: absolute;
 		z-index: 80;
 		top: $margin;
-		left: 140px;
+		left: $margin;
 		font-size: 80px;
 		line-height: 60px;
 		color: #fff;
@@ -66,6 +66,31 @@ $blue: #57C7FF;
 		width: 250px;
 		// border: 1px solid rgba(255, 255, 255, $generalOpacity);
 		// @include box-shadow();
+
+		.titleFrenchTech {
+			color: $red;
+			position: absolute;
+			top: 530px;
+			text-transform: uppercase;
+			font-size: 18px;
+			width: 100%;
+			text-align: center;
+			font-weight: bold;
+			@include text-shadow();
+			font-family: 'Source Code Pro';
+			@include font-smoothing();
+
+			&:after {
+				content: ' ';
+				position: absolute;
+				display: block;
+				transform: translate3d(50%, 0, 0);
+				width: 50%;
+				height: 1px;
+				margin-top: 20px;
+				background: $red;
+			}
+		}
 
 		.border {
 			position: absolute;
@@ -181,7 +206,7 @@ $blue: #57C7FF;
 			border-radius: 50%;
 			display: block;
 			border: 1px solid rgba(255, 255, 255, $generalOpacity);
-			
+
 			&.infiniteRotation {
 				animation: 2s rotation infinite;
 			}

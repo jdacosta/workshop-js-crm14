@@ -5,16 +5,20 @@ class SpeechApiManager {
 
   /**
    * Constructor
-   * 
+   *
    * @return {void}
    */
   constructor() {
 
     // initialize
     this.messages = [];
-
     this.messageElement = $('#textSpeech');
     this.inProgress = false;
+    this.words = [
+      'bonjour', 'salut', 'hello',
+      'dance', 'main', 'mains',
+      'saute', 'tourne', 'bouge'
+    ];
 
     this.timeout = setTimeout(() => {
       console.log('timeout');
@@ -52,8 +56,6 @@ class SpeechApiManager {
         console.log(event.error);
       })
       .on('interimResult', (msg) => {
-        // console.log('interimResult', msg);
-        // clearTimeout(this.timeout);
         this.replaceMessage(msg);
         this.inProgress = true;
       })

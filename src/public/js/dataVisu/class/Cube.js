@@ -9,18 +9,22 @@ export default class Cube {
 
 		let radius = config.radius || 70;
 
+		this.rotationX = config.rotationX || 0;
+		this.rotationY = config.rotationY || 0;
+
 		// Create a group
-		this.group = new THREE.Group();
+		this.group = new THREE.Group
 		this.widthSegments = config.widthSegments || 16;
 		this.heightSegments = config.heightSegments || 16
 
 		// this.geometry = new THREE.SphereGeometry(radius, this.widthSegments, this.heightSegments);
 		this.geometry = new THREE.BoxGeometry(radius, radius, radius);
-		this.material = new THREE.MeshLambertMaterial({
-			color: 0xffaa00,
+		this.material = new THREE.MeshBasicMaterial({
+			color: config.color || 0xffaa00,
+			opacity: config.opacity || 0.3,
 			transparent: true,
-			wireframe: false,
-			wireframeLinewidth: 1
+			wireframe: config.wireframe || false,
+			wireframeLinewidth: config.wireframeLinewidth || 1
 		});
 
 		// Create a cube
@@ -39,8 +43,8 @@ export default class Cube {
 	}
 
 	render() {
-		this.cube.rotation.x += 0.005;
-		this.cube.rotation.y += 0.01;
+		this.cube.rotation.x += this.rotationX;
+		this.cube.rotation.y += this.rotationY;
 	}
 
 	getObject() {

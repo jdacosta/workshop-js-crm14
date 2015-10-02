@@ -8,16 +8,16 @@ class SoundManager extends EventEmitter {
 		super();
 
 		this.sounds = [{
-			path: '../assets/sounds/broken-robot.wav',
+			path: '../assets/sounds/test.mp3',
 			name: 'broken-robot'
 		}, {
-			path: '../assets/sounds/bugs.wav',
+			path: '../assets/sounds/test.mp3',
 			name: 'bugs'
 		}, {
-			path: '../assets/sounds/burning-man.wav',
+			path: '../assets/sounds/test.mp3',
 			name: 'burning-man'
 		}, {
-			path: '../assets/sounds/music.mp3',
+			path: '../assets/sounds/test.mp3',
 			name: 'music'
 		}];
 

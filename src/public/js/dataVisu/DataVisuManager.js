@@ -79,8 +79,8 @@ class DataVisuManager {
       this.frenchTech.position.z = 100;
       groupCocq.add(this.frenchTech);
 
-      groupCocq.position.x = -window.innerWidth / 2 + 100;
-      groupCocq.position.y = window.innerHeight / 2 - 100;
+      groupCocq.position.x = window.innerWidth / 2 - 230;
+      groupCocq.position.y = 100;
 
       this.SceneManager.add(groupCocq);
     }, (xhr) => {
@@ -92,37 +92,44 @@ class DataVisuManager {
         console.log('ERROR THREEJS : Loader error ' + xhr);
     });
 
-
-
-    // let loader = new THREE.OBJLoader(manager);
-    // loader.load('assets/data/3dObjects/french-tech.obj', (object) => {
-    //   this.frenchTech = object;
-    //   this.frenchTech.traverse((child) => {
-    //       if (child instanceof THREE.Mesh) {
-    //         console.log('Add material');
-    //         child.material = material;
-    //       }
-    //   });
-    //   this.frenchTech.material = material;
-    //   this.frenchTech.scale.set(40, 40, 40);
-    //   this.frenchTech.position.z = 100;
-    //   this.SceneManager.add(this.frenchTech);
-    // }, (xhr) => {
-    //     if (xhr.lengthComputable) {
-    //         let percentComplete = xhr.loaded / xhr.total * 100;
-    //         console.log(Math.round(percentComplete, 2) + '% downloaded');
-    //     }
-    // }, (xhr) => {
-    //     console.log('ERROR THREEJS : Loader error ' + xhr);
-    // });
-
     // Create a cube
     this.cube = new Cube({
-      radius: 80,
-      positionX: (window.innerWidth - 160),
-      positionY: -100
+      radius: 30,
+      opacity: 0.3,
+      color: 0xffffff,
+      wireframe: true,
+      positionX: (window.innerWidth - 80),
+      positionY: -100,
+      rotationX: -0.05,
+      rotationY: 0.01,
     });
     this.SceneManager.add(this.cube.getObject());
+
+    // Create a cube
+    this.cube2 = new Cube({
+      radius: 30,
+      opacity: 0.3,
+      color: 0xffffff,
+      wireframe: true,
+      positionX: (window.innerWidth - 160),
+      positionY: -100,
+      rotationX: -0.05,
+      rotationY: 0.05,
+    });
+    this.SceneManager.add(this.cube2.getObject());
+
+    // Create a cube
+    this.cube3 = new Cube({
+      radius: 30,
+      opacity: 0.3,
+      color: 0xffffff,
+      wireframe: true,
+      positionX: (window.innerWidth - 240),
+      positionY: -100,
+      rotationX: 0.05,
+      rotationY: -0.1,
+    });
+    this.SceneManager.add(this.cube3.getObject());
   }
 
   initVideo() {
@@ -220,7 +227,6 @@ class DataVisuManager {
     });
 
     this.SceneManager.add(this.smallAnalayser1.getObject());
-    // this.SceneManager.add(this.smallAnalayser1.getFrame());
   }
 
   render() {
@@ -234,9 +240,11 @@ class DataVisuManager {
 
     // Render objects
     this.cube.render();
+    this.cube2.render();
+    this.cube3.render();
 
     // French tech
-    if(this.frenchTech) {
+    if (this.frenchTech) {
       this.frenchTech.rotation.y += 0.01;
     }
 
