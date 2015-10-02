@@ -13,7 +13,11 @@ var maps         = require('../config/sourcemaps');
 var handleErrors = require('../lib/handleErrors');
 
 var opts = assign({}, watchify.args, config.browserify);
-var bwatch = watchify(browserify(opts));
+var bwatch = watchify(
+  browserify(opts)
+    .add(require.resolve('babel/polyfill'))
+    .transform(babelify.configure({ignore: ['node_modules', 'bower_components']}))
+);
 
 gulp.task('browserify', bundle);
 bwatch.on('update', bundle);
@@ -21,8 +25,6 @@ bwatch.on('log', gutil.log);
 
 function bundle () {
     return bwatch
-        .add(require.resolve('babel/polyfill'))
-        .transform(babelify.configure({ignore: ['node_modules', 'bower_components']}))
         .bundle()
         .on('error', handleErrors)
         .pipe(source(config.name))
