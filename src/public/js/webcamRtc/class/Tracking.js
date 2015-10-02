@@ -7,6 +7,7 @@ class Tracking extends EventEmitter  {
 
   /**
    * Constructeur
+   *
    * @param  {object} webcam  objet webcam
    * @return {void}
    */
@@ -15,6 +16,7 @@ class Tracking extends EventEmitter  {
 
     // init
     this.lastImageData = null;
+    this.lastPosition = [];
     this.totalAverageTrack = [];
     this.totalAverageRight = [];
     this.totalAverageCenter = [];
@@ -41,8 +43,9 @@ class Tracking extends EventEmitter  {
   }
 
   /**
-   * [initCanvas description]
-   * @return {[type]} [description]
+   * Initialisation du Canvas
+   *
+   * @return {void}
    */
   initCanvas() {
     this.contextBlended = this.canvasBlended.getContext('2d');
@@ -52,8 +55,10 @@ class Tracking extends EventEmitter  {
   }
 
   /**
-   * [tracking description]
-   * @return {[type]} [description]
+   * Mise à jour du tracking en fonction du
+   * requestAnimFrame.
+   *
+   * @return {void}
    */
   tracking() {
     this.drawVideo();
@@ -63,16 +68,20 @@ class Tracking extends EventEmitter  {
   }
 
   /**
-   * [drawVideo description]
-   * @return {[type]} [description]
+   * Récupére le le flux de la webcam
+   * et le dessine dans un canvas
+   *
+   * @return {void}
    */
   drawVideo() {
     this.contextSource.drawImage(this.webcamLocal, 0, 0, this.webcamLocal.width, this.webcamLocal.height);
   }
 
   /**
-   * [blend description]
-   * @return {[type]} [description]
+   * Préparation du traitement pour pouvoir comparer l'image
+   * de 2 canvas afin de déterminer les différences.
+   *
+   * @return {void}
    */
   blend() {
 
@@ -102,29 +111,27 @@ class Tracking extends EventEmitter  {
   }
 
   /**
-   * [fastAbs description]
-   * @param  {[type]} value [description]
-   * @return {[type]}       [description]
+   * Equivalent de Math.abs pour les opérateurs binaire.
+   *
+   * @param  {int} value  valeur en entrée
+   * @return {int}
    */
   fastAbs(value) {
     return (value ^ (value >> 31)) - (value >> 31);
   }
 
   /**
-   * [threshold description]
-   * @param  {[type]} value [description]
-   * @return {[type]}       [description]
+   * Changer les couleurs en noir ou blanc en
+   * fonction de la valeur en entrée.
+   *
+   * @return {hex}
    */
   threshold(value) {
     return (value > 0x15) ? 0xFF : 0;
   }
 
   /**
-   * [differenceAccuracy description]
-   * @param  {[type]} target [description]
-   * @param  {[type]} data1  [description]
-   * @param  {[type]} data2  [description]
-   * @return {[type]}        [description]
+   * Permet d'analyser les différences
    */
   differenceAccuracy(target, data1, data2) {
     if (data1.length != data2.length) return null;
@@ -142,8 +149,10 @@ class Tracking extends EventEmitter  {
   }
 
   /**
-   * [checkAreas description]
-   * @return {[type]} [description]
+   * Recupère la moyenne de différence pour
+   * chaque zone découpé de la source vidéo.
+   *
+   * @return {void}
    */
   checkAreas() {
 
@@ -186,9 +195,11 @@ class Tracking extends EventEmitter  {
   }
 
   /**
-   * [motionDetecting description]
-   * @param  {[type]} averageTrack [description]
-   * @return {[type]}              [description]
+   * Permet de détecter un mouvement, la position
+   * ou se situe le mouvement et la vitesse.
+   *
+   * @param  {float} averageTrack  moyenne total
+   * @return {void}
    */
   motionDetecting(averageTrack) {
     this.totalAverageTrack.push(averageTrack);
@@ -196,31 +207,32 @@ class Tracking extends EventEmitter  {
       let average = _.sum(this.totalAverageTrack) / this.totalAverageTrack.length;
       if (average > 10) {
 
-        // get speed
-        let speed;
-        if (average > 150) speed = 'VERY_FAST';
-        else if (average > 100) speed = 'FAST';
-        else if (average > 70) speed = 'NORMAL';
-        else if (average > 30) speed = 'SLOW';
-        else speed = 'VERY_SLOW';
-
-        // get zone area
-        let area;
+        // get position
+        let position;
         let right = _.sum(this.totalAverageRight);
         let center = _.sum(this.totalAverageCenter);
         let left = _.sum(this.totalAverageLeft);
         if (Math.abs(right) < Math.abs(left) && Math.abs(center) < Math.abs(left)) {
-          area = 'LEFT';
+          position = 'LEFT';
         } else if (Math.abs(right) < Math.abs(center) && Math.abs(left) < Math.abs(center)) {
-          area = 'CENTER';
+          position = 'CENTER';
         } else {
-          area = 'RIGHT';
+          position = 'RIGHT';
         }
+        this.updatePosition(position);
 
-        //console.log('motionDetecting', true, average, {speed: speed, area: area});
-        this.emit('motionDetecting', true, average, {speed: speed, area: area});
+        // get speed
+        let speed;
+        if (average > 65) speed = 'VERY_FAST';
+        else if (average > 50) speed = 'FAST';
+        else if (average > 30) speed = 'NORMAL';
+        else if (average > 20) speed = 'SLOW';
+        else speed = 'VERY_SLOW';
+
+        console.log('motionDetecting', true, average, {'speed': speed, 'position': position});
+        this.emit('motionDetecting', true, average, {'speed': speed, 'position': position});
       } else {
-        //console.log('motionDetecting', false);
+        console.log('motionDetecting', false);
         this.emit('motionDetecting', false, {});
       }
 
@@ -229,6 +241,37 @@ class Tracking extends EventEmitter  {
       this.totalAverageRight = [];
       this.totalAverageCenter = [];
       this.totalAverageLeft = [];
+    }
+  }
+
+  /**
+   * Détecter un déplacement en fonction
+   * de la dernière position.
+   *
+   * @param  {string} position  position possédant un mouvement
+   * @return {void}
+   */
+  updatePosition(position) {
+    let time = new Date().getTime();
+    let last = _.last(this.lastPosition);
+    if (!this.lastPosition.length) {
+      this.lastPosition.push({'position': position, 'time': time});
+    } else if (this.lastPosition.length && last['position'] !== position) {
+      this.lastPosition.push({'position': position, 'time': time});
+      if (this.lastPosition.length > 3) {
+        this.lastPosition.shift();
+      }
+    }
+
+    // detect a position
+    let first = _.first(this.lastPosition);
+    if (this.lastPosition.length === 3 && (time - first['time'])) {
+      if (first['position'] === 'LEFT' && last['position'] === 'CENTER' && position === 'RIGHT') {
+        console.log('DEPLACEMENT LEFT --> RIGHT');
+      }
+      if (first['position'] === 'RIGHT' && last['position'] === 'CENTER' && position === 'LEFT') {
+        console.log('DEPLACEMENT RIGHT --> LEFT');
+      }
     }
   }
 }
