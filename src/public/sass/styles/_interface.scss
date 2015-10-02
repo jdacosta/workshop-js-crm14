@@ -157,6 +157,20 @@ $blue: #57C7FF;
 		// border: 1px solid rgba(255, 255, 255, $generalOpacity);
 		// @include box-shadow();
 
+		.iconsList {
+			position: absolute;
+			top: 700px;
+			left: $margin;
+			margin-left: $margin;
+			color: rgba(#fff, 0.5);
+			font-size: 20px;
+
+			& > div {
+				float: left;
+				margin-right: $margin;
+			}
+		}
+
 		.titleFrenchTech {
 			color: $red;
 			position: absolute;
