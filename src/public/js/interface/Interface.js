@@ -5,6 +5,64 @@ export default class Interface {
     this.initFrameAnimation();
     this.initMessagerie();
     this.initTitleAnimation();
+    this.initGridAnimation();
+  }
+
+  initGridAnimation() {
+    var gridContainer = $('#grid');
+      var vLines = $('.vLine', gridContainer);
+      var hLines = $('.hLine', gridContainer);
+      var i = 0;
+
+      // Pour chaque lignes verticales
+      $(vLines).each(function() {
+        $(this).show();
+        tweeningVLine($(this), random(5, 10));
+        i++;
+      });
+
+      // Pour chaque lignes horizontales
+      $(hLines).each(function() {
+        $(this).show();
+        tweeningHLine($(this), random(3, 8));
+        i++;
+      });
+
+      function tweeningVLine(el, time) {
+        resetTween(el);
+        
+        TweenMax.to(el, time, {
+          left: '100%',
+          onComplete: function() {
+            var t = random(5, 10);
+            tweeningVLine(el, t);
+          }
+        });
+      }
+
+      function tweeningHLine(el, time) {
+        resetTween(el);
+
+        TweenMax.to(el, time, {
+          top: '100%',
+          onComplete: function() {
+            var t = random(3, 8);
+            tweeningHLine(el, t);
+          }
+        });
+      }
+
+      function resetTween(el) {
+        TweenMax.set(el, {
+          left: 0,
+          top: 0,
+          opacity: random(0.5, 1)
+        });
+      }
+
+      function random(min, max) {
+        return Math.floor(Math.random() * max) + min;
+      }
   }
 
   initTitleAnimation() {

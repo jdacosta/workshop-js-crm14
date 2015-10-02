@@ -36,6 +36,32 @@ $blue: #57C7FF;
 	left: 0;
 	z-index: 100;
 
+	#grid {
+		position: absolute;
+		left: 0;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		
+		.line {
+			position: absolute;
+			top: 0;
+			left: 0;
+			background: $red;
+			display: none;
+		}
+
+		.vLine {
+			height: 100%;
+			width: 1px;
+		}
+
+		.hLine {
+			height: 1px;
+			width: 100%;
+		}
+	}
+
 	.titlesContainer {
 		position: absolute;
 		z-index: 80;
