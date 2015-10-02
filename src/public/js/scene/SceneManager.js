@@ -51,7 +51,7 @@ class SceneManager extends EventEmitter {
     this.light.position.set( 0, 250, 0);
     this.scene.add(this.light);
 
-    var ambientLight = new THREE.AmbientLight( 0xffffff );
+    let ambientLight = new THREE.AmbientLight( 0xffffff );
     this.scene.add( ambientLight );
 
     // Add to the dom

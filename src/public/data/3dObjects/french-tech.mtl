@@ -1,0 +1,13 @@
+# Blender MTL File: 'la-french-tech-logo-e74303c4ee774907a5ca4859b185287b.blend'
+# Material Count: 1
+
+newmtl Material.001
+Ns 54.901961
+Ka 1.000000 1.000000 1.000000
+Kd 0.792882 0.079919 0.069200
+Ks 0.052632 0.052632 0.052632
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\\Users\\ascholaert\\Desktop\\Untitled.003.png
