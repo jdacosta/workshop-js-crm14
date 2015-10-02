@@ -99,26 +99,28 @@ class DataVisuManager {
     this.parent = new THREE.Object3D();
 
     let material = new THREE.MeshLambertMaterial({
-      color: 0x2194CE,
-      transparent: true,
-      opacity: 0.5,
+      // color: 0x2194CE,
+      // transparent: true,
+      // opacity: 0.5,
       map: THREE.ImageUtils.loadTexture( "assets/data/textures/UV_Grid_Sm.jpg" )
     });
 
-    let materials = [material];
-    let meshFaceMaterial = new THREE.MeshFaceMaterial( materials );
+    let cube2 = new THREE.BoxGeometry(80, 80, 80);
+    let mesh = new THREE.Mesh(cube2, material);
 
-    let loader = new THREE.OBJLoader(manager);
-    loader.load('assets/data/3dObjects/french-tech.obj', (object) => {
-      this.frenchTech = object;
-      this.frenchTech.traverse((child) => {
-          if (child instanceof THREE.Mesh) {
-            console.log('Add material');
-            child.material = material;
-          }
-      });
-      this.frenchTech.material = material;
-      console.log(this.frenchTech);
+    this.SceneManager.add(mesh);
+
+    let loader = new THREE.JSONLoader();
+    loader.load('assets/data/3dObjects/frenchtech.json', (object) => {
+      console.log('______ ici ______');
+      let mesh2 = new THREE.Mesh(object, material);
+      this.frenchTech = mesh2;
+      // this.frenchTech.traverse((child) => {
+      //     if (child instanceof THREE.Mesh) {
+      //       this.createMesh(child.geometry, 20, 0, 0, 0);
+      //     }
+      // });
+      // this.frenchTech.material = material;
       this.frenchTech.scale.set(40, 40, 40);
       this.frenchTech.position.z = 100;
       this.SceneManager.add(this.frenchTech);
@@ -130,6 +132,30 @@ class DataVisuManager {
     }, (xhr) => {
         console.log('ERROR THREEJS : Loader error ' + xhr);
     });
+
+
+
+    // let loader = new THREE.OBJLoader(manager);
+    // loader.load('assets/data/3dObjects/french-tech.obj', (object) => {
+    //   this.frenchTech = object;
+    //   this.frenchTech.traverse((child) => {
+    //       if (child instanceof THREE.Mesh) {
+    //         console.log('Add material');
+    //         child.material = material;
+    //       }
+    //   });
+    //   this.frenchTech.material = material;
+    //   this.frenchTech.scale.set(40, 40, 40);
+    //   this.frenchTech.position.z = 100;
+    //   this.SceneManager.add(this.frenchTech);
+    // }, (xhr) => {
+    //     if (xhr.lengthComputable) {
+    //         let percentComplete = xhr.loaded / xhr.total * 100;
+    //         console.log(Math.round(percentComplete, 2) + '% downloaded');
+    //     }
+    // }, (xhr) => {
+    //     console.log('ERROR THREEJS : Loader error ' + xhr);
+    // });
 
     // Create a cube
     this.cube = new Cube({
