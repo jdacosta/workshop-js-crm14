@@ -11,7 +11,7 @@ var certificate = fs.readFileSync('./config/server.crt', 'utf8');
 var credentials = {key: privateKey, cert: certificate};
 
 var app = express(),
-    //server = http.createServer(app),
+    // server = http.createServer(app),
     server = https.createServer(credentials, app),
     port =  parseInt(process.env.PORT, 10) || config.server.port,
     io;
