@@ -26,6 +26,8 @@ class App extends EventEmitter {
     console.log('__________________ & ___________________');
     console.log('___________ Adrien Scholaert ___________');
     console.log('________________________________________');
+    console.log('___________ Gobelins - CRM14 ___________');
+    console.log('________________________________________');
 
     // Enable Html Interface
     this.interface = new Interface();
