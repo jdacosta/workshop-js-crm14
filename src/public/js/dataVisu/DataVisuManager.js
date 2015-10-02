@@ -11,7 +11,7 @@ import _ from 'lodash';
  * DataVisuManager
  * Manage ThreeJS Graphics
  */
-class DataVisuManager {
+export default class DataVisuManager {
 
   /**
    * Constructor
@@ -54,22 +54,30 @@ class DataVisuManager {
     this.initObjects();
   }
 
+  /**
+   * Initialise certains objets 3d (cocq, cube...)
+   * @return {void}
+   */
   initObjects() {
+
+    // On crée un manager pour les loader 
     let manager = new THREE.LoadingManager();
-    manager.onProgress = ( item, loaded, total ) => {
+    manager.onProgress = (item, loaded, total) => {
       console.log( item, loaded, total );
     };
 
-    this.parent = new THREE.Object3D();
-
+    // Création d'une texture de couler simple (couleur rose de la French Tech)
     let material = new THREE.MeshLambertMaterial({
       color: 0xbe0d41,
-      // // transparent: true,
-      // // opacity: 0.5,
     });
+
+    // Création d'un groupe pour ajouter notre cocq
     let groupCocq = new THREE.Object3D();
 
+    // Création du loader
     let loader = new THREE.JSONLoader();
+
+    // On charge notre objet 3d au format json
     loader.load('assets/data/3dObjects/frenchtech.json', (object) => {
       
       console.log('________________________________________');
@@ -78,16 +86,22 @@ class DataVisuManager {
       console.log('________________________________________');
       console.log('________________________________________');
 
+      // Création d'un objet de type mesh avec le modele chargé
       let mesh2 = new THREE.Mesh(object, material);
+
+      // ON assigne à l'objet certains parametres (le mesh généré, la texture, la taile, la position....)
       this.frenchTech = mesh2;
       this.frenchTech.material = material;
       this.frenchTech.scale.set(20, 20, 20);
       this.frenchTech.position.z = 100;
+
+      // Ajout de l'objet au groupe
       groupCocq.add(this.frenchTech);
 
       groupCocq.position.x = window.innerWidth / 2 - 230;
       groupCocq.position.y = 100;
 
+      // On ajoute le jolie cocq à la scène
       this.SceneManager.add(groupCocq);
     }, (xhr) => {
         if (xhr.lengthComputable) {
@@ -109,6 +123,8 @@ class DataVisuManager {
       rotationX: -0.05,
       rotationY: 0.01,
     });
+
+    // Ajout a la scene
     this.SceneManager.add(this.cube.getObject());
 
     // Create a cube
@@ -122,6 +138,8 @@ class DataVisuManager {
       rotationX: -0.05,
       rotationY: 0.05,
     });
+
+    // Ajout a la scene
     this.SceneManager.add(this.cube2.getObject());
 
     // Create a cube
@@ -135,16 +153,31 @@ class DataVisuManager {
       rotationX: 0.05,
       rotationY: -0.1,
     });
+
+    // Ajout a la scene
     this.SceneManager.add(this.cube3.getObject());
   }
 
+  /**
+   * Initialise le rendu de la video en arriere plan
+   * @return {void}
+   */
   initVideo() {
-    // Video
+
+    // Création d'un objet video
     this.video = new Video();
+
+    // Ajout de la vidéo à la scène
     this.SceneManager.add(this.video.getObject());
   }
 
+  /**
+   * Création et initialisation des analysers de sons
+   * @param  {SoundJS} sound Le son à jouer
+   * @return {void}
+   */
   initAnalysers(sound) {
+
     // Create particule analyser 1
     this.circleParticulte1Analyser = new CirclePlaneAnalyser(sound, {
       particuleSize: 1,
@@ -207,11 +240,18 @@ class DataVisuManager {
         opacity: 0.5
       }
     });
+
     this.SceneManager.add(this.inlineAnalyser.getObject());
-    // this.SceneManager.add(this.inlineAnalyser.getFrame());
   }
 
+  /**
+   * Création et initialisation des analysers plus petit situés dans la partie droite
+   * @param  {SoundJS} sound Le son à jouer
+   * @return {void}
+   */
   initSmallAnalyser1(sound) {
+
+    // Création de l'analyser inline avec ses params
     this.smallAnalayser1 = new InlineAnalyser(sound, {
       width: 255,
       height: 50,
@@ -232,9 +272,14 @@ class DataVisuManager {
       }
     });
 
+    // Ajout à la scène
     this.SceneManager.add(this.smallAnalayser1.getObject());
   }
 
+  /**
+   * Render général de la classe pour appeler les render de chaque instance crées
+   * @return {[type]} [description]
+   */
   render() {
     this.circleAnalyser.render();
     this.circle2Analyser.render();
@@ -249,7 +294,7 @@ class DataVisuManager {
     this.cube2.render();
     this.cube3.render();
 
-    // French tech
+    // Move awesome French tech cocq logo
     if (this.frenchTech) {
       this.frenchTech.rotation.y += 0.01;
     }
@@ -260,5 +305,3 @@ class DataVisuManager {
     this.inlineAnalyser.render();
   }
 }
-
-export default DataVisuManager;

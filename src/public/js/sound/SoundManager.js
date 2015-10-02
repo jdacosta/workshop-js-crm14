@@ -3,7 +3,12 @@ import Events from 'events';
 
 const EventEmitter = Events.EventEmitter;
 
-class SoundManager extends EventEmitter {
+export default class SoundManager extends EventEmitter {
+	
+	/**
+	 * Constructor - intialise les attributs
+	 * @return {void}
+	 */
 	constructor() {
 		super();
 
@@ -25,19 +30,34 @@ class SoundManager extends EventEmitter {
 		this.soundMute = false;
 	}
 
+	/**
+	 * Initialisation - chargement des sons
+	 * @return {void}
+	 */
 	init() {
-		// Events
+
+		// Add Event listener
 		SoundJs.Sound.on('fileload', this.loadHandler, this);
+		
 		// Loads all sounds
 		this.loadSounds();
 	}
 
+	/**
+	 * Charges les sons
+	 * @return {void}
+	 */
 	loadSounds() {
 		this.sounds.map((sound) => {
 			SoundJs.Sound.registerSound(sound.path, sound.name);
 		});
 	}
 
+	/**
+	 * A chaque son chargé on emet un event
+	 * @param  {event} event
+	 * @return {void}
+	 */
 	loadHandler(event) {
 		this.count++;
 
@@ -54,6 +74,13 @@ class SoundManager extends EventEmitter {
     this.emit('handleComplete');
   }
 
+  /**
+   * Permet de  jouer un son
+   * @param  {string} soundID L'id du son à jouer
+   * @param  {float} volume  L'intensité du volume
+   * @param  {boolean} loop    Si le son doit se jouer en boucle
+   * @return {SoundJS}
+   */
   playSound(soundID, volume, loop) {
   	let sound;
 
@@ -75,5 +102,3 @@ class SoundManager extends EventEmitter {
     return sound;
   }
 }
-
-export default SoundManager;

@@ -11,8 +11,15 @@ import EffectComposer from '../../data/postprocessing/EffectComposer.js';
 
 const EventEmitter = Events.EventEmitter;
 
-class SceneManager extends EventEmitter {
+/**
+ * SeneManager - crée la scène webgl
+ */
+export default class SceneManager extends EventEmitter {
 
+  /**
+   * Constructor
+   * @return {[type]} [description]
+   */
 	constructor() {
 		super();
 
@@ -28,7 +35,12 @@ class SceneManager extends EventEmitter {
     this.stats;
 	}
 
+  /**
+   * Initialisation de la classe
+   * @return {void}
+   */
 	init() {
+
     // Init Stats only in dev mode
     this.initStats();
 
@@ -77,6 +89,10 @@ class SceneManager extends EventEmitter {
     this.emit('sceneManagerLoaded');
 	}
 
+  /**
+   * Redimensionne la scène
+   * @return {void}
+   */
   onWindowResize() {
     let windowHalfX = window.innerWidth / 2;
     let windowHalfY = window.innerHeight / 2;
@@ -87,6 +103,10 @@ class SceneManager extends EventEmitter {
     this.composer.setSize( window.innerWidth, window.innerHeight );
   }
 
+  /**
+   * Active ou désactive les glitch
+   * @param {boolean} bool
+   */
   setGlitch(bool) {
     this.glitchPass.goWild = !bool;
   }
@@ -126,9 +146,11 @@ class SceneManager extends EventEmitter {
     document.body.appendChild(this.stats.domElement);
   }
 
+  /**
+   * Ajoute un objet à la scène principale
+   * @param {ThreeObject} object
+   */
 	add(object) {
 		return this.scene.add(object);;
 	}
 }
-
-export default SceneManager;
