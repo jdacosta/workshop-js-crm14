@@ -2,15 +2,15 @@ import THREE from 'three';
 
 export default class Video {
   constructor() {
-    this.video = document.getElementById('webcam-video-local');
+    this.video = document.getElementById('webcam-video-remote');
 
     this.xsize = window.innerWidth + 100;
-		this.ysize = window.innerHeight + 100;
+    this.ysize = window.innerHeight + 100;
 
-		this.texture = new THREE.VideoTexture(this.video);
-		this.texture.minFilter = THREE.LinearFilter;
-		this.texture.magFilter = THREE.LinearFilter;
-		this.texture.format = THREE.RGBFormat;
+    this.texture = new THREE.VideoTexture(this.video);
+    this.texture.minFilter = THREE.LinearFilter;
+    this.texture.magFilter = THREE.LinearFilter;
+    this.texture.format = THREE.RGBFormat;
     this.texture.needsUpdate = true;
 
     let parameters = {
