@@ -1,6 +1,6 @@
+var babelify     = require('babelify');
 var browserify   = require('browserify');
 var gulp         = require('gulp');
-var babelify     = require('babelify');
 var sourcemaps   = require('gulp-sourcemaps');
 var uglify       = require('gulp-uglify');
 var gutil        = require('gulp-util');
