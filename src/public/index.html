@@ -15,6 +15,17 @@
 <body>
 
   <div id="interface">
+  
+    <div id="wordContainer">
+      <div class="word">Bonjour</div>
+    </div>
+
+    <div id="warningMessage">
+      <img id="icon" src="assets/img/!.png" alt="">
+      <h1>Signal faible</h1>
+      <p>Bougez pour rétablir le lien avec Grenoble</p>
+    </div>
+
     <div class="frame">
       <div class="top"></div>
       <div class="right"></div>
@@ -27,6 +38,16 @@
       <div id="subBigTitle" class="titlesTop">Dance floor</div>
     </div>
 
+    <div id="grid">
+      <div class="vLine line"></div>
+      <div class="vLine line"></div>
+      <div class="vLine line"></div>
+      <div class="vLine line"></div>
+      <div class="hLine line"></div>
+      <div class="hLine line"></div>
+      <div class="hLine line"></div>
+      <div class="hLine line"></div>
+    </div>
 
     <div id="rightSide">
       <!-- <div class="border border-top"></div>
@@ -43,7 +64,7 @@
           <div class="circle infiniteRotation dashed circle5"></div>
         </div>
 
-        <div class="barsTop">
+        <div id="barsTop">
           <div class="bar bar1"></div>
           <div class="bar bar2"></div>
           <div class="bar bar3"></div>
@@ -55,6 +76,25 @@
       <h2 class="title1">Analysers - experiments</h2>
 
       <h2 class="titleFrenchTech">French Tech</h2>
+      
+      <div class="iconsList">
+          <div class="icon icon-browser-1"></div>
+          <div class="icon icon-browser-2"></div>
+          <div class="icon icon-browser-3"></div>
+          <div class="icon icon-browser-4"></div>
+          <div class="icon icon-browser-5"></div>
+          <div class="icon icon-browser-6"></div>
+
+          <div class="clear"></div>
+
+          <div class="icon icon-drawer"></div>
+          <div class="icon icon-document-1"></div>
+          <div class="icon icon-smart-phone-2"></div>
+          <div class="icon icon-tablet-2"></div>
+          <div class="icon icon-imac"></div>
+          <div class="icon icon-keyboard"></div>
+      </div>
+
     </div>
   </div>
 
@@ -87,5 +127,6 @@
 
   <script src="/socket.io/socket.io.js"></script>
   <script src="assets/js/app.js"></script>
+
 </body>
 </html>

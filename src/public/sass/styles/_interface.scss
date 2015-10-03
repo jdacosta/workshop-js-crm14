@@ -36,6 +36,96 @@ $blue: #57C7FF;
 	left: 0;
 	z-index: 100;
 
+	#wordContainer {
+		position: absolute;
+		bottom: $margin;
+		left: $margin;
+		text-align: left;
+		max-width: 50%;
+
+		.word {
+			font-size: 80px;
+			color: #fff;
+			text-transform: uppercase;
+			font-family: 'Allerta Stencil', sans-serif;
+			font-weight: bold;
+			text-align: left;
+		}
+	}
+
+	$hMessage: 350px;
+	$wMessage: 350px;
+
+	#warningMessage {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin-top: -$hMessage / 2;
+		margin-left: -$wMessage / 2;
+		width: $wMessage;
+		height: $hMessage;
+		border-radius: 50%;
+		background: rgba($red, 0.4);
+		box-shadow: 0px 0px 20px rgba(#000, 0.5);
+		text-align: center;
+		color: #fff;
+		padding: $margin;
+		font-family: 'Verdana', 'Serif';
+		
+		img {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate3d(-50%, -50%, 0);
+		}
+
+		h1 {
+			position: absolute;
+			top: 25%;
+			text-transform: uppercase;
+			font-size: 30px;
+			left: 50%;
+			width: 80%;
+			transform: translate3d(-50%, -50%, 0);
+		}
+
+		p {
+			position: absolute;
+			left: 50%;
+			width: 60%;
+			bottom: 15%;
+			text-transform: uppercase;
+			transform: translate3d(-50%, -50%, 0);
+			font-size: 18px;
+		}
+	}
+
+	#grid {
+		position: absolute;
+		left: 0;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		
+		.line {
+			position: absolute;
+			top: 0;
+			left: 0;
+			background: $red;
+			display: none;
+		}
+
+		.vLine {
+			height: 100%;
+			width: 1px;
+		}
+
+		.hLine {
+			height: 1px;
+			width: 100%;
+		}
+	}
+
 	.titlesContainer {
 		position: absolute;
 		z-index: 80;
@@ -66,6 +156,20 @@ $blue: #57C7FF;
 		width: 250px;
 		// border: 1px solid rgba(255, 255, 255, $generalOpacity);
 		// @include box-shadow();
+
+		.iconsList {
+			position: absolute;
+			top: 700px;
+			left: $margin;
+			margin-left: $margin;
+			color: rgba(#fff, 0.5);
+			font-size: 20px;
+
+			& > div {
+				float: left;
+				margin-right: $margin;
+			}
+		}
 
 		.titleFrenchTech {
 			color: $red;

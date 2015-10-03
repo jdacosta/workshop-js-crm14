@@ -3,6 +3,7 @@ $generalOpacity: 0.25;
 $backgroundOpacity: 0.6;
 
 .speechtext {
+  display: none;
   @include absolute(bottom $margin left $margin);
   z-index: 100;
   width: 400px;

@@ -5,6 +5,156 @@ export default class Interface {
     this.initFrameAnimation();
     this.initMessagerie();
     this.initTitleAnimation();
+    this.initGridAnimation();
+    this.initWarningMessage();
+
+    // Variables pour l'ajout de mots clés
+    this.timeout;
+    this.wordContainer = $('#wordContainer');
+    this.wordBlock = $('.word', wordContainer);
+    this.wordSpeed = 0.2;
+  }
+
+  /**
+   * Quand on ajoute un mot clé
+   * Celui-ci remplace le précédent et s'autodétruit 
+   * après 10s
+   * @param {void}
+   */
+  setWord(newWord) {
+    // On clear le timer si il existe
+    if(this.timeout) {
+      clearTimeout(this.timeout);
+    }
+
+    // Si le mot existe on clear et on l'ajoute
+    if(newWord) {
+      this.clearWord(() => {
+        this.addWord(newWord);
+      });
+    }
+
+    // On initialise un timer qui clear après 10s
+    this.timeout = setTimeout(() => {
+      this.clearWord();
+    }, 10000);
+  }
+
+  addWord(newWord) {
+    this.wordBlock.text(newWord);
+    TweenMax.to(this.wordBlock, this.wordSpeed, {
+      opacity: 1,
+      ease: Back.easeOut,
+      left: 0,
+      scale: 1
+    });
+  }
+
+  clearWord(callback) {
+    TweenMax.to(this.wordBlock, this.wordSpeed, {
+      opacity: 0,
+      ease: Back.easeOut,
+      left: -100,
+      scale: 0.5,
+      onComplete: () => {
+        this.wordBlock.empty();
+
+        if(callback) {
+          callback();
+        }
+      }
+    });
+  }
+
+  initWarningMessage() {
+    let messageContainer = $('#warningMessage');
+    let img = $('#icon', messageContainer);
+    let tl = new TimelineMax({
+      repeat: -1,
+      yoyo: true
+    })
+
+    tl.add(TweenLite.to(img, 1, {
+      scale: 1.2
+    }));
+
+  }
+
+  setWarningMessage(bool) {
+    let messageContainer = $('#warningMessage');
+    let speed = 0.65;
+
+    if(!bool) {
+      messageContainer.show();
+      TweenLite.to(messageContainer, speed, {
+        opacity: 1,
+        scale: 1,
+        ease: Back.easeOut
+      });
+    } else {
+      TweenLite.to(messageContainer, speed, {
+        opacity: 0,
+        scale: 0.8,
+        ease: Back.easeOut
+      });
+    }
+  }
+
+  initGridAnimation() {
+    let gridContainer = $('#grid');
+    let vLines = $('.vLine', gridContainer);
+    let hLines = $('.hLine', gridContainer);
+    let i = 0;
+
+    // Pour chaque lignes verticales
+    $(vLines).each(function() {
+      $(this).show();
+      tweeningVLine($(this), random(5, 10));
+      i++;
+    });
+
+    // Pour chaque lignes horizontales
+    $(hLines).each(function() {
+      $(this).show();
+      tweeningHLine($(this), random(3, 8));
+      i++;
+    });
+
+    function tweeningVLine(el, time) {
+      resetTween(el);
+      
+      TweenMax.to(el, time, {
+        left: '100%',
+        onComplete: function() {
+          var t = random(5, 10);
+          tweeningVLine(el, t);
+        }
+      });
+    }
+
+    function tweeningHLine(el, time) {
+      resetTween(el);
+
+      TweenMax.to(el, time, {
+        top: '100%',
+        onComplete: function() {
+          var t = random(3, 8);
+          tweeningHLine(el, t);
+        }
+      });
+    }
+
+    function resetTween(el) {
+      TweenMax.set(el, {
+        left: 0,
+        top: 0,
+        opacity: random(0.5, 1)
+      });
+    }
+
+    function random(min, max) {
+      return Math.floor(Math.random() * max) + min;
+    }
   }
 
   initTitleAnimation() {

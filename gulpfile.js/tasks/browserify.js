@@ -13,6 +13,7 @@ var maps         = require('../config/sourcemaps');
 var handleErrors = require('../lib/handleErrors');
 
 var opts = assign({}, watchify.args, config.browserify);
+
 var bwatch = watchify(
   browserify(opts)
     .add(require.resolve('babel/polyfill'))

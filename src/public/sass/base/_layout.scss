@@ -18,3 +18,7 @@ main {
     @include size(100%);
     position: absolute;
 }
+
+.clear {
+    clear: both;
+}
