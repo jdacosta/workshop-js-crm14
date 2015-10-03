@@ -1,92 +1,115 @@
-import SoundJs from 'soundjs';
 import Events from 'events';
+import SoundJs from 'soundjs';
 
 const EventEmitter = Events.EventEmitter;
 
 export default class SoundManager extends EventEmitter {
-	
-	/**
-	 * Constructor - intialise les attributs
-	 * @return {void}
-	 */
-	constructor() {
-		super();
 
-		this.sounds = [{
-			path: '../assets/sounds/test.mp3',
-			name: 'broken-robot'
-		}, {
-			path: '../assets/sounds/test.mp3',
-			name: 'bugs'
-		}, {
-			path: '../assets/sounds/test.mp3',
-			name: 'burning-man'
-		}, {
-			path: '../assets/sounds/test.mp3',
-			name: 'music'
-		}];
+  /**
+   * Constructor - intialise les attributs
+   *
+   * @return {void}
+   */
+  constructor() {
+    super();
 
-		this.count = 0;
-		this.soundMute = false;
-	}
+    // initialize
+    this.count = 0;
+    this.soundMute = false;
+    this.sounds = [{
+      path: '../assets/sounds/sound1.mp3',
+      name: 'sound1'
+    }, {
+      path: '../assets/sounds/sound2.mp3',
+      name: 'sound2'
+    }, {
+      path: '../assets/sounds/sound3.mp3',
+      name: 'sound3'
+    }, {
+      path: '../assets/sounds/sound4.mp3',
+      name: 'sound4'
+    }, {
+      path: '../assets/sounds/sound5.mp3',
+      name: 'sound5'
+    }, {
+      path: '../assets/sounds/sound6.mp3',
+      name: 'sound6'
+    }, {
+      path: '../assets/sounds/sound7.mp3',
+      name: 'sound7'
+    }, {
+      path: '../assets/sounds/sound8.mp3',
+      name: 'sound8'
+    }, {
+      path: '../assets/sounds/sound9.mp3',
+      name: 'sound9'
+    }];
+  }
 
-	/**
-	 * Initialisation - chargement des sons
-	 * @return {void}
-	 */
-	init() {
+  /**
+   * Initialisation - chargement des sons
+   *
+   * @return {void}
+   */
+  init() {
 
-		// Add Event listener
-		SoundJs.Sound.on('fileload', this.loadHandler, this);
-		
-		// Loads all sounds
-		this.loadSounds();
-	}
+    // add event listener
+    SoundJs.Sound.on('fileload', this.loadHandler, this);
 
-	/**
-	 * Charges les sons
-	 * @return {void}
-	 */
-	loadSounds() {
-		this.sounds.map((sound) => {
-			SoundJs.Sound.registerSound(sound.path, sound.name);
-		});
-	}
+    // loads all sounds
+    this.loadSounds();
+  }
 
-	/**
-	 * A chaque son chargé on emet un event
-	 * @param  {event} event
-	 * @return {void}
-	 */
-	loadHandler(event) {
-		this.count++;
+  /**
+   * Charges les sons
+   *
+   * @return {void}
+   */
+  loadSounds() {
+    this.sounds.map((sound) => {
+      SoundJs.Sound.registerSound(sound.path, sound.name);
+    });
+  }
 
-		console.log('sound loaded');
-		this.emit('soundLoaded');
+  /**
+   * A chaque son chargé, on emet un event
+   *
+   * @param  {event} event
+   * @return {void}
+   */
+  loadHandler(event) {
+    this.count++;
+    console.log('[EVENT] soundLoaded')
+    this.emit('soundLoaded');
+    if(this.count == this.sounds.length) {
+      console.log('[EVENT] soundManagerLoaded');
+      this.emit('soundManagerLoaded')
+    }
+  }
 
-		if(this.count == this.sounds.length) {
-			console.log('soundManagerLoaded');
-			this.emit('soundManagerLoaded')
-		}
-	}
-
+  /**
+   * Gestion des évenements quand tout est OK
+   *
+   * @param  {event} event  reception de l'évenement
+   * @return {void}
+   */
   handleComplete(event) {
     this.emit('handleComplete');
   }
 
   /**
-   * Permet de  jouer un son
+   * Permet de jouer un son
+   *
    * @param  {string} soundID L'id du son à jouer
    * @param  {float} volume  L'intensité du volume
    * @param  {boolean} loop    Si le son doit se jouer en boucle
    * @return {SoundJS}
    */
   playSound(soundID, volume, loop) {
-  	let sound;
+    let sound;
 
     if (loop) {
         sound = SoundJs.Sound.play(soundID, null, null, null, -1);
-
     } else {
         sound = SoundJs.Sound.play(soundID);
     }
@@ -97,7 +120,7 @@ export default class SoundManager extends EventEmitter {
         sound.volume = 0;
     }
 
-    sound.on("complete", this.handleComplete, this);
+    sound.on('complete', this.handleComplete, this);
 
     return sound;
   }
