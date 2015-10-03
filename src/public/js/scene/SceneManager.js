@@ -1,13 +1,13 @@
 import THREE from 'three';
 import Events from 'events';
 import Stats from 'stats.js';
-import DigitalGlitch from '../../data/shaders/DigitalGlitch.js';
-import CopyShader from '../../data/shaders/CopyShader.js';
-import RenderPass from '../../data/postprocessing/RenderPass.js';
-import ShaderPass from '../../data/postprocessing/ShaderPass.js';
-import MaskPass from '../../data/postprocessing/MaskPass.js';
-import GlitchPass from '../../data/postprocessing/GlitchPass.js';
-import EffectComposer from '../../data/postprocessing/EffectComposer.js';
+import DigitalGlitch from '../../data/shaders/DigitalGlitch';
+import CopyShader from '../../data/shaders/CopyShader';
+import RenderPass from '../../data/postprocessing/RenderPass';
+import ShaderPass from '../../data/postprocessing/ShaderPass';
+import MaskPass from '../../data/postprocessing/MaskPass';
+import GlitchPass from '../../data/postprocessing/GlitchPass';
+import EffectComposer from '../../data/postprocessing/EffectComposer';
 
 const EventEmitter = Events.EventEmitter;
 
@@ -20,26 +20,26 @@ export default class SceneManager extends EventEmitter {
    * Constructor
    * @return {[type]} [description]
    */
-	constructor() {
-		super();
+  constructor() {
+    super();
 
-		// ThreeJS
-		this.scene;
-  	this.camera;
+    // ThreeJS
+    this.scene;
+    this.camera;
     this.renderer;
-  	this.light;
-  	this.composer;
-  	this.glitchPass;
+    this.light;
+    this.composer;
+    this.glitchPass;
 
     // Stats
     this.stats;
-	}
+  }
 
   /**
    * Initialisation de la classe
    * @return {void}
    */
-	init() {
+  init() {
 
     // Init Stats only in dev mode
     this.initStats();
@@ -49,7 +49,7 @@ export default class SceneManager extends EventEmitter {
 
     // Camera
     this.camera = new THREE.PerspectiveCamera(58, window.innerWidth / window.innerHeight, 1, 10000);
-		this.camera.aspect = window.innerWidth / window.innerHeight;
+    this.camera.aspect = window.innerWidth / window.innerHeight;
     this.camera.position.z = 1000;
     this.camera.updateProjectionMatrix();
 
@@ -69,15 +69,15 @@ export default class SceneManager extends EventEmitter {
     // Add to the dom
     document.body.appendChild(this.renderer.domElement);
 
-		this.composer = new THREE.EffectComposer(this.renderer);
-		this.composer.addPass( new THREE.RenderPass(this.scene, this.camera));
+    this.composer = new THREE.EffectComposer(this.renderer);
+    this.composer.addPass( new THREE.RenderPass(this.scene, this.camera));
 
-		// Create Glitch
-		this.glitchPass = new THREE.GlitchPass();
-		this.glitchPass.renderToScreen = true;
-		this.glitchPass.goWild = false;
+    // Create Glitch
+    this.glitchPass = new THREE.GlitchPass();
+    this.glitchPass.renderToScreen = true;
+    this.glitchPass.goWild = false;
 
-		this.composer.addPass(this.glitchPass);
+    this.composer.addPass(this.glitchPass);
 
     // Launch render
     requestAnimationFrame(this.render.bind(this));
@@ -87,7 +87,7 @@ export default class SceneManager extends EventEmitter {
 
     // Emit loaded event
     this.emit('sceneManagerLoaded');
-	}
+  }
 
   /**
    * Redimensionne la scène
@@ -111,23 +111,23 @@ export default class SceneManager extends EventEmitter {
     this.glitchPass.goWild = !bool;
   }
 
-	/**
-	* Three JS Render
-	* @return {void}
-	*/
-	render() {
-		this.stats.begin();
+  /**
+  * Three JS Render
+  * @return {void}
+  */
+  render() {
+    this.stats.begin();
 
-		this.emit('render');
+    this.emit('render');
 
-		// this.renderer.render(this.scene, this.camera);
-		this.composer.render();
+    // this.renderer.render(this.scene, this.camera);
+    this.composer.render();
 
-		this.stats.end();
+    this.stats.end();
 
-		// Re-render each frame
-		requestAnimationFrame(this.render.bind(this));
-	}
+    // Re-render each frame
+    requestAnimationFrame(this.render.bind(this));
+  }
 
   /**
    * Init Stats for debug
@@ -150,7 +150,7 @@ export default class SceneManager extends EventEmitter {
    * Ajoute un objet à la scène principale
    * @param {ThreeObject} object
    */
-	add(object) {
-		return this.scene.add(object);;
-	}
+  add(object) {
+    return this.scene.add(object);;
+  }
 }

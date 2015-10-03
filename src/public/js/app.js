@@ -1,10 +1,10 @@
 import Events from 'events';
-import SceneManager from './scene/SceneManager';
 import DataVisuManager from './dataVisu/DataVisuManager';
-import SpeechApiManager from './speechApi/SpeechApiManager.js';
+import Interface from './interface/Interface';
+import SceneManager from './scene/SceneManager';
+import SpeechApiManager from './speechApi/SpeechApiManager';
 import SoundManager from './sound/SoundManager';
-import WebcamRtcManager from './webcamRtc/WebcamRtcManager.js';
-import Interface from './interface/Interface.js';
+import WebcamRtcManager from './webcamRtc/WebcamRtcManager';
 
 const EventEmitter = Events.EventEmitter;
 
@@ -20,22 +20,30 @@ class App extends EventEmitter {
   constructor() {
     super();
 
+    // authors
     console.log('________________________________________');
     console.log('_______________ Crée par _______________');
-    console.log('____________ Julien Da Costa ___________');
+    console.log('_______ Julien Martins Da Costa ________');
     console.log('__________________ & ___________________');
     console.log('___________ Adrien Scholaert ___________');
     console.log('________________________________________');
     console.log('___________ Gobelins - CRM14 ___________');
     console.log('________________________________________');
 
-    // Enable Html Interface
+    // enable html Interface
     this.interface = new Interface();
 
+    // enable threejs
     this.sceneManager = new SceneManager();
     this.dataVisuManager = new DataVisuManager(this.sceneManager);
+
+    // enable sound manager
     this.soundManager = new SoundManager();
+
+    // enable speechapi
     this.speechApiManager = new SpeechApiManager();
+
+    // enable webcamRTC manager
     this.webcamRtcManager = new WebcamRtcManager();
     this.webcamRtcManager.on('motionDetecting', this.onMotionDetecting.bind(this));
 
@@ -44,7 +52,8 @@ class App extends EventEmitter {
   }
 
   /**
-   * Initialise la scène webgl
+   * Initialise la scène webGL
+   *
    * @return {void}
    */
   init() {
@@ -54,43 +63,45 @@ class App extends EventEmitter {
   }
 
   /**
-   * Méthode appellé quand un movuement est détecté
-   * @param  {boolean} bool
+   * Méthode appellée quand un mouvement est détecté
+   *
+   * @param  {boolean} bool  true lorsqu'un mouvement est detecté
    * @return {void}
    */
   onMotionDetecting(bool) {
+    console.log('[EVENT] onMotionDetecting')
     this.interface.setWarningMessage(bool);
     this.sceneManager.setGlitch(bool);
   }
 
   /**
-   * Méthode appelé quand la scène webgl est chagé
-   * Initialise ensuite le soundManager
+   * Méthode appelée quand la scène webGL est chargée pour
+   * initialiser ensuite le soundManager
    * @return {[type]} [description]
    */
   onSceneManagerLoaded() {
-    console.log('onSceneManagerLoaded');
-    // Listen event and Init SoundManager
+    console.log('[EVENT] onSceneManagerLoaded');
     this.soundManager.on('soundManagerLoaded', this.onSoundManagerLoaded.bind(this));
     this.soundManager.init();
   }
 
   /**
-   * Quand le SoundManager est chargé
+   * Méthode appellée quand le SoundManager est chargé
+   *
    * @return {void}
    */
   onSoundManagerLoaded() {
-    console.log('onSoundManagerLoaded');
+    console.log('[EVENT] onSoundManagerLoaded');
 
-    // Play background sound
-    let sound = this.soundManager.playSound('music', 1, 1);
-    let sound2 = this.soundManager.playSound('burning-man', 1, 1);
+    // play background sound
+    let sound = this.soundManager.playSound('sound1', 1, 1);
+    let sound2 = this.soundManager.playSound('sound2', 1, 1);
 
-    // Init data visu manager
+    // init data visu manager
     this.dataVisuManager.init(sound);
     this.dataVisuManager.initSmallAnalyser1(sound2);
 
-    // Exemple d'appel pour changer un mot clé
+    // exemple d'appel pour changer un mot clé
     setTimeout(() => {
       this.interface.setWord('Salut !');
     }, 5000);
@@ -98,10 +109,15 @@ class App extends EventEmitter {
       this.interface.setWord('Lorem ipsum dolor sit amet');
     }, 10000);
 
-    // Listen render
+    // listen render
     this.sceneManager.on('render', this.render.bind(this));
   }
 
+  /**
+   * Rendre la scène
+   *
+   * @return {void}
+   */
   render() {
     this.dataVisuManager.render();
   }

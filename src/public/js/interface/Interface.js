@@ -17,7 +17,7 @@ export default class Interface {
 
   /**
    * Quand on ajoute un mot clé
-   * Celui-ci remplace le précédent et s'autodétruit 
+   * Celui-ci remplace le précédent et s'autodétruit
    * après 10s
    * @param {void}
    */
@@ -122,7 +122,7 @@ export default class Interface {
 
     function tweeningVLine(el, time) {
       resetTween(el);
-      
+
       TweenMax.to(el, time, {
         left: '100%',
         onComplete: function() {
@@ -178,8 +178,8 @@ export default class Interface {
     });
 
     // An array of all the divs that wrap each character
-    var chars = mySplitText1.chars; 
-    var chars2 = mySplitText2.chars; 
+    var chars = mySplitText1.chars;
+    var chars2 = mySplitText2.chars;
 
     TweenLite.set("#bigTitle", {
       perspective:400
@@ -211,7 +211,7 @@ export default class Interface {
       });
     });
   }
- 
+
   initMessagerie() {
     let message = $('#textSpeech');
     let nbMessage = $('.nbMessages', message);
