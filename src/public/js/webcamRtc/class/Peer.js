@@ -101,7 +101,6 @@ class Peer extends EventEmitter {
     console.log('[INFO] Connect peer');
 
     // connect peer
-    // TODO export config
     this.peerInstance = new peerjs(
       this.userId, {
         host: config.server.host, port: config.server.port, path: '/peer',
@@ -143,14 +142,12 @@ class Peer extends EventEmitter {
    * @param  {string} contactId  identifiant de l'utilisateur
    * @return {void}
    */
-  //askCall(e) {
   askCall(contactId) {
 
     // display info
     console.log('[INFO] Call');
 
     // get user to call
-    //this.contactId = $(e.currentTarget).data('user');
     this.contactId = contactId;
 
     // get our video
