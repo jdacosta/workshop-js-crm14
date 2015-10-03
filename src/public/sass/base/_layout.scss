@@ -1,24 +1,24 @@
 html,
 body {
-    @include size(100%);
-    position: relative;
-    overflow: hidden;
+  @include size(100%);
+  position: relative;
+  overflow: hidden;
 }
 
 body {
-    @include font-smoothing;
-    box-sizing: border-box;
-    font: 1.4vh sans-serif;
-    color: $color-black-10;
-    background: $color-white-10;
-    z-index: 0;
+  @include font-smoothing;
+  box-sizing: border-box;
+  font: 1.4vh sans-serif;
+  color: $color-black-10;
+  background: $color-white-10;
+  z-index: 0;
 }
 
 main {
-    @include size(100%);
-    position: absolute;
+  @include size(100%);
+  position: absolute;
 }
 
 .clear {
-    clear: both;
+
 }

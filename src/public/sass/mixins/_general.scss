@@ -1,18 +1,18 @@
 @mixin simple-circle($radius, $color) {
-    content: ' ';
-	position: absolute;
-	transform: translate3d(50%, 50%, 0);
-	display: block;
-	width: $radius / 2;
-	height: $radius / 2;
-	background: $color;
-	border-radius: 50%;
+  content: ' ';
+  position: absolute;
+  transform: translate3d(50%, 50%, 0);
+  display: block;
+  width: $radius / 2;
+  height: $radius / 2;
+  background: $color;
+  border-radius: 50%;
 }
 
 @mixin text-shadow() {
-	text-shadow: -2px 4px 10px rgba(#000, 0.2);
+  text-shadow: -2px 4px 10px rgba(#000, 0.2);
 }
 
 @mixin box-shadow() {
-	box-shadow: -2px 4px 10px rgba(#000, 0.2);
+  box-shadow: -2px 4px 10px rgba(#000, 0.2);
 }

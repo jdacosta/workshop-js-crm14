@@ -4,41 +4,41 @@ $margin: 10px;
 $size: 2px;
 
 .frame {
-	position: absolute;
-	top: $margin;
-	left: $margin;
-	right: $margin;
-	bottom: $margin;
+  position: absolute;
+  top: $margin;
+  left: $margin;
+  right: $margin;
+  bottom: $margin;
 
-	.top,
-	.right,
-	.bottom,
-	.left {
-		position: absolute;
-		background: $color;
-		@include box-shadow();
-	}
+  .top,
+  .right,
+  .bottom,
+  .left {
+    position: absolute;
+    background: $color;
+    @include box-shadow();
+  }
 
-	.right {
-		right: 0;
-		height: 0;
-		width: $size;
-	}
+  .right {
+    right: 0;
+    height: 0;
+    width: $size;
+  }
 
-	.bottom {
-		width: 0;
-		height: $size;
-		bottom: 0;
-	}
+  .bottom {
+    width: 0;
+    height: $size;
+    bottom: 0;
+  }
 
-	.left {
-		height: 0;
-		width: $size;
-		left: 0;
-	}
+  .left {
+    height: 0;
+    width: $size;
+    left: 0;
+  }
 
-	.top {
-		height: $size;
-		width: 0;
-	}
+  .top {
+    height: $size;
+    width: 0;
+  }
 }
