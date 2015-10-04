@@ -154,31 +154,3 @@ node_modules
 
 ### Bower ###
 bower_components/
-
-src/public/sounds/un-momento.mp3
-
-src/public/data/sintel.mp4
-
-src/public/data/video.webm
-
-src/public/data/sintel.mp4
-
-src/public/sounds/Bugs.wav
-
-src/public/sounds/nurning-man.wav
-
-src/public/sounds/Bugs.wav
-
-*.wav
-
-src/public/data/sintel.mp4
-
-src/public/data/sintel.mp4
-
-src/servers/config/server.crt
-
-src/servers/config/server.csr
-
-src/servers/config/server.key
-
-src/public/sounds/music.mp3

@@ -267,11 +267,11 @@ class Tracking extends EventEmitter  {
     let first = _.first(this.lastPosition);
     if (this.lastPosition.length === 3 && (time - first['time'])) {
       if (first['position'] === 'LEFT' && last['position'] === 'CENTER' && position === 'RIGHT') {
-        //console.log('DEPLACEMENT LEFT --> RIGHT');
+        console.log('DEPLACEMENT LEFT --> RIGHT');
         this.emit('movePosition', 'LEFT_TO_RIGHT');
       }
       if (first['position'] === 'RIGHT' && last['position'] === 'CENTER' && position === 'LEFT') {
-        //console.log('DEPLACEMENT RIGHT --> LEFT');
+        console.log('DEPLACEMENT RIGHT --> LEFT');
         this.emit('movePosition', 'RIGHT_TO_LEFT');
       }
     }

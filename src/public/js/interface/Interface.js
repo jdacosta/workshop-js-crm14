@@ -22,6 +22,9 @@ export default class Interface {
    * @param {void}
    */
   setWord(newWord) {
+
+    console.log('DISPLAY MESSAGE ' + newWord);
+
     // On clear le timer si il existe
     if(this.timeout) {
       clearTimeout(this.timeout);

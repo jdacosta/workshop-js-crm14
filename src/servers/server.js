@@ -1,14 +1,14 @@
 var express    = require('express'),
-    fs         = require('fs'),
+    //fs         = require('fs'),
     http       = require('http'),
     //https      = require('https'),
     peer       = require('peer').ExpressPeerServer,
     config     = require('./config/config'),
     connection = require('./manager/connection');
 
-var privateKey  = fs.readFileSync('./ssl/server.key', 'utf8'),
+/*var privateKey  = fs.readFileSync('./ssl/server.key', 'utf8'),
     certificate = fs.readFileSync('./ssl/server.crt', 'utf8'),
-    credentials = { key: privateKey, cert: certificate };
+    credentials = { key: privateKey, cert: certificate };*/
 
 var app = express(),
     server = http.createServer(app),

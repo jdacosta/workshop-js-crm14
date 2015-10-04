@@ -236,6 +236,10 @@ class Peer extends EventEmitter {
   gotError(error) {
     console.log(error);
   }
+
+  getSocket() {
+    return this.socket;
+  }
 }
 
 export default Peer;

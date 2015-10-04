@@ -8,16 +8,21 @@ class SpeechApiManager {
    *
    * @return {void}
    */
-  constructor() {
+  constructor(ui, wrm) {
 
     // initialize
     this.messages = [];
+    this.interface = ui;
+    this.socket = wrm.getPeer().getSocket();
     this.messageElement = $('#textSpeech');
     this.inProgress = false;
     this.words = [
       'bonjour', 'salut', 'hello',
-      'dance', 'main', 'mains',
-      'saute', 'tourne', 'bouge'
+      'danser', 'taper dans les mains',
+      'sauter', 'tourner', 'bouger',
+      'nul', 'plus vite', 'en solo',
+      'mauvais', 'good', 'bien',
+      'encore', 'toujours plus'
     ];
 
     this.timeout = setTimeout(() => {
@@ -33,6 +38,13 @@ class SpeechApiManager {
       interimResults: true,
       autoRestart: true
     });
+
+    this.socket.on('messageAction', this.displayMessage.bind(this));
+  }
+
+  displayMessage(message) {
+    console.log('MESSAGE RECU ' + message);
+    this.interface.setWord(message);
   }
 
   /**
@@ -44,7 +56,7 @@ class SpeechApiManager {
     let _this = this;
     this.recognizer
       .on('start', () => {
-        // console.log('end');
+        // console.log('start');
       })
       .on('end', () => {
         // console.log('end');
@@ -56,31 +68,32 @@ class SpeechApiManager {
         console.log(event.error);
       })
       .on('interimResult', (msg) => {
-        this.replaceMessage(msg);
+        this.sendMessage(msg);
         this.inProgress = true;
       })
-      .on('result', () => {
-        // console.log('result');
-      })
       .on('finalResult', (msg) => {
-        // this.replaceMessage(msg);
         this.stopProgress();
-        // console.log(_this.messages);
       })
       .start();
   }
 
   stopProgress() {
-    // console.log('stopProgress');
     this.inProgress = false;
   }
 
-  createTimeout() {
-    // console.log('createTimeout');
-    this.timeout = setTimeout(() => {
-      // console.log('end Timeout');
-      this.stopProgress();
-    }, 2000);
+  /**
+   * Envoi le message via socketIO à l'autre client connecté
+   *
+   * @param  {string} content  contenu du message à envoyer
+   * @return {void}
+   */
+  sendMessage(msg) {
+    for (let i in this.words) {
+      if (msg.toLowerCase().indexOf(this.words[i]) !== -1) {
+        console.log('MESSAGE ENVOYEE : ' + this.words[i]);
+        this.socket.emit('message', this.words[i]);
+      }
+    }
   }
 
   /**
@@ -94,23 +107,26 @@ class SpeechApiManager {
       this.delFirstMessage();
     }
 
-    let messagesHtml = document.getElementById('textSpeech');
-    let newMessage = document.createElement('p');
+    let messagesHtml = document.getElementById('textSpeech'),
+        newMessage = document.createElement('p');
     newMessage.innerHTML = content;
     messagesHtml.appendChild(newMessage);
   }
 
+  /**
+   * Permet de remplacer un texte dans le chat
+   *
+   * @param  {string} content  contenu du message à afficher
+   * @return {void}
+   */
   replaceMessage(content) {
     let messagesElements = $('p', this.messageElement);
 
     if(this.messages.length == 0 || !this.inProgress) {
       this.addNewMessage(content);
     } else {
-      // Replace
       messagesElements.last().text(content);
     }
-
-    // this.createTimeout();
   }
 
   /**
@@ -120,9 +136,8 @@ class SpeechApiManager {
    */
   delFirstMessage() {
     this.messages.shift();
-
-    let messagesHtml = document.getElementById('textSpeech');
-    let message = document.getElementsByTagName('p');
+    let messagesHtml = document.getElementById('textSpeech'),
+        message = document.getElementsByTagName('p');
     messagesHtml.removeChild(message[0]);
   }
 }

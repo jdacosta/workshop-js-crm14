@@ -42,7 +42,7 @@ export default class SceneManager extends EventEmitter {
   init() {
 
     // Init Stats only in dev mode
-    this.initStats();
+    //this.initStats();
 
     // Scene
     this.scene = new THREE.Scene();
@@ -116,14 +116,14 @@ export default class SceneManager extends EventEmitter {
   * @return {void}
   */
   render() {
-    this.stats.begin();
+    //this.stats.begin();
 
     this.emit('render');
 
     // this.renderer.render(this.scene, this.camera);
     this.composer.render();
 
-    this.stats.end();
+    //this.stats.end();
 
     // Re-render each frame
     requestAnimationFrame(this.render.bind(this));

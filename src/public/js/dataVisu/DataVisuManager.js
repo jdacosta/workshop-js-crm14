@@ -60,10 +60,10 @@ export default class DataVisuManager {
    */
   initObjects() {
 
-    // On crée un manager pour les loader 
+    // On crée un manager pour les loader
     let manager = new THREE.LoadingManager();
     manager.onProgress = (item, loaded, total) => {
-      console.log( item, loaded, total );
+      console.log(item, loaded, total);
     };
 
     // Création d'une texture de couler simple (couleur rose de la French Tech)
@@ -79,7 +79,7 @@ export default class DataVisuManager {
 
     // On charge notre objet 3d au format json
     loader.load('assets/data/3dObjects/frenchtech.json', (object) => {
-      
+
       console.log('________________________________________');
       console.log('________________________________________');
       console.log('______ cocq cocq coquedetteeeee ! ______');

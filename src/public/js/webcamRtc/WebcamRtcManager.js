@@ -13,7 +13,7 @@ class WebcamPeerRtc extends EventEmitter {
    */
   constructor() {
     super();
-    
+
     // create object
     this.webcam = new Webcam();
     this.peer = new Peer(this.webcam);
@@ -21,6 +21,13 @@ class WebcamPeerRtc extends EventEmitter {
     this.tracking.on('motionDetecting', (bool) => {
       this.emit('motionDetecting', bool);
     });
+    this.tracking.on('movePosition', (mouvement) => {
+      this.emit('movePosition');
+    });
+  }
+
+  getPeer() {
+    return this.peer;
   }
 }
 

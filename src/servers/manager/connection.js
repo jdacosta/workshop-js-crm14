@@ -30,6 +30,15 @@ function init(socketio) {
       io.emit('getUsersList', deviceConnections);
     });
 
+    // get messages
+    socket.on('message', function(message) {
+
+      console.log('MESSAGE : ' + message);
+
+      // return send message
+      socket.broadcast.emit('messageAction', message);
+    });
+
     // disconnect
     socket.on('disconnect', function() {
 

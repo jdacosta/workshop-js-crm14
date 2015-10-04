@@ -40,12 +40,13 @@ class App extends EventEmitter {
     // enable sound manager
     this.soundManager = new SoundManager();
 
-    // enable speechapi
-    this.speechApiManager = new SpeechApiManager();
-
     // enable webcamRTC manager
     this.webcamRtcManager = new WebcamRtcManager();
     this.webcamRtcManager.on('motionDetecting', this.onMotionDetecting.bind(this));
+    //this.webcamRtcManager.on('movePosition', this.onChangeSound.bind(this));
+
+    // enable speechapi
+    this.speechApiManager = new SpeechApiManager(this.interface, this.webcamRtcManager);
 
     // initialize app
     this.init();
@@ -69,7 +70,7 @@ class App extends EventEmitter {
    * @return {void}
    */
   onMotionDetecting(bool) {
-    console.log('[EVENT] onMotionDetecting')
+    console.log('[EVENT] onMotionDetecting');
     this.interface.setWarningMessage(bool);
     this.sceneManager.setGlitch(bool);
   }
@@ -92,26 +93,32 @@ class App extends EventEmitter {
    */
   onSoundManagerLoaded() {
     console.log('[EVENT] onSoundManagerLoaded');
+    let number = Math.floor((Math.random() * 1) + 1);
 
     // play background sound
-    let sound = this.soundManager.playSound('sound1', 1, 1);
-    let sound2 = this.soundManager.playSound('sound2', 1, 1);
+    let sound = this.soundManager.playSound('sound' + number, 1, 1);
+    let sound2 = this.soundManager.playSound('sound' + number, 1, 1);
 
     // init data visu manager
     this.dataVisuManager.init(sound);
     this.dataVisuManager.initSmallAnalyser1(sound2);
 
-    // exemple d'appel pour changer un mot clé
-    setTimeout(() => {
-      this.interface.setWord('Salut !');
-    }, 5000);
-    setTimeout(() => {
-      this.interface.setWord('Lorem ipsum dolor sit amet');
-    }, 10000);
-
     // listen render
     this.sceneManager.on('render', this.render.bind(this));
   }
+
+  /*onChangeSound() {
+    console.log('[EVENT] onChangeSound');
+    let number = Math.floor((Math.random() * 9) + 1);
+
+    // play background sound
+    let sound = this.soundManager.playSound('sound' + number, 1, 1);
+    let sound2 = this.soundManager.playSound('sound' + number, 1, 1);
+
+    // init data visu manager
+    this.dataVisuManager.updateSound(sound);
+    //this.dataVisuManager.initSmallAnalyser1(sound2);
+  }*/
 
   /**
    * Rendre la scène

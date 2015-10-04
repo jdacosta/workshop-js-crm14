@@ -37,13 +37,13 @@ export default class SoundManager extends EventEmitter {
     }, {
       path: '../assets/sounds/sound7.mp3',
       name: 'sound7'
-    }, {
+    }/*, {
       path: '../assets/sounds/sound8.mp3',
       name: 'sound8'
     }, {
       path: '../assets/sounds/sound9.mp3',
       name: 'sound9'
-    }];
+    }*/];
   }
 
   /**
