@@ -2,11 +2,11 @@
 
 Vidéo du projet : [https://www.youtube.com/watch?v=2EqTC-yfowM](https://www.youtube.com/watch?v=2EqTC-yfowM)
 
-Donne ton énergie en bougeant et en dansant pour garder un lien fort entre Grenoble et Annecy.
+Pour promouvoir la "French tech in the alps", nous avons produit une installation permettant aux passants des villes d'Annecy et de Grenoble d'interagir en direct avec une borne interactive.
 
-Le but est d'insiter les personnes à bouger le plus possible devant la caméra afin de ne
-pas perdre la connexion entre Annecy et Grenoble. Lorsque le mouvement des personnes n'est
-plus assez rapide, la conneion est perdu à l'aide d'un effet de glitch.
+"French Tech Dance Floor" — Donne ton énergie en bougeant et en dansant pour garder un lien fort entre Grenoble et Annecy.
+
+Le but est d'inciter les personnes à bouger le plus possible devant la caméra de la borne interactive afin de ne pas perdre la connexion entre Annecy et Grenoble. Lorsque le mouvement des personnes n'est plus assez rapide, la connexion entre les 2 villes est perdu à l'aide d'un effet de glitch.
 
 
 ### Pour ce projet a été mis en place :
